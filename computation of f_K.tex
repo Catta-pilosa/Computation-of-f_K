@@ -1,0 +1,755 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amssymb,amsmath,amsthm,amscd}
+\usepackage{braket}
+\usepackage{ytableau, xcolor}
+\usepackage{multicol}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{prop}{Proposition}[theorem]
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{example}{Example}[theorem]
+%\DeclareMathOperator{\coH}{H}
+\renewcommand{\frak}[1]{\mathfrak{#1}}
+\newcommand{\cc}[1]{\mathcal{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\lr}[1]{\left({#1}\right)}
+\newcommand{\inprod}[1]{\left<{#1}\right>}
+%\newcommand{\highlight}[1]{\textcolor{red}{#1}}
+\newcommand{\s}{\square}
+\DeclareMathOperator{\dd}{d}
+\DeclareMathOperator{\Hilb}{Hilb}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\coH}{H^*}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\vacuum}{\ket{}}
+\DeclareMathOperator{\pt}{pt}
+\newcommand{\p}{\partial}
+
+
+\title{computation of $f_K$}
+\author{Zhongyi SHI }
+\date{July 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Conclusion of computation by program}
+\iffalse
+\begin{lemma}
+Let $k\geqslant 1$, $n_1,\ldots,n_k\in\mathbb{Z}$, and $\alpha\in H^{*}(X)$. The derivative $(\mathfrak{a}_{n_1}\cdots\mathfrak{a}_{n+k}(\tau_*\alpha))'$ equals
+\[
+\begin{split}
+&-\sum_{j=1}^k\frac{n_j}{2}\cdot\sum_{m_1+m_2=n_j}\mathfrak{a}_{n_1}\cdots\mathfrak{a}_{n_{j-1}}:\mathfrak{a}_{m_1}\mathfrak{a}_{m_2}:\mathfrak{a}_{j+1}\cdots\mathfrak{a}_{n_k}(\tau_{(k+1)*}\alpha)\\
+&-\sum_{j=1}^k\frac{n_j(|n_j|-1)}{2}\cdot\mathfrak{a}_{n_1}\cdots\mathfrak{a}_{n_k}(\tau_{k*}(K\alpha))
+\end{split}
+\]
+\end{lemma}
+\fi
+
+\begin{theorem}[LQW]
+Let $k\geqslant0,n\in\mathbb{Z}$, and $\alpha\in H^{*}(X)$. Then, $\mathfrak{a}^{(k)}_n (\alpha)$ equals 
+\[
+\begin{aligned}
+&(-n)^k k! \left(\sum_{\mathit{l}(\lambda)=k+1,|\lambda|=n} \frac{1}{\lambda^!} \mathfrak{a}_\lambda(\tau_*\alpha)-\sum_{\mathit{l}(\lambda)=k-1,|\lambda|=n} \frac{s(\lambda)-1}{24\lambda!} \mathfrak{a}_\lambda(\tau_*(e\alpha))\right) \\
+&+\sum_{\epsilon\in\{K,K^2\}} \sum_{\mathit{l}(\lambda)=k+1-|\epsilon|/2,|\lambda|=n} \frac{f_\epsilon(\lambda)} {\lambda!} \mathfrak{a}_\lambda(\tau_*(\epsilon\alpha))
+\end{aligned}
+\]
+where all the numbers $f_\epsilon(\lambda)$ are independent of $X$ and $\alpha$.
+\end{theorem}
+
+From this theorem we can get the induction formula of $f_K$ on the length of generalized partition $\lambda$.
+
+\begin{prop}
+$f_K(\lambda)$ has the following induction formula:
+\[f_K(\lambda) = -\frac{1}{2}(-1)^kk!\left(\sum_{i\geqslant 0}i^2(m_i-m_{-i})-1\right)-\sum_{i<j}(i+j)m_im_jf_K(\lambda_{i,j})-\sum_{i}im_i(m_i-1)f_K(\lambda_{i,i}),\]
+where $\lambda=(\ldots,(-i)^{m_{-i}}\ldots(-1)^{m_{-1}}1^{m_1}\ldots i^{m_i}\ldots)$ has length $k+1$, \\
+and $\lambda_{i,j}=(\ldots i^{m_i-1}\ldots j^{m_j-1}\ldots (i+j)^{m_{i+j}+1}\ldots)$.
+\end{prop}
+
+\begin{prop}
+For generalized partition $\lambda$ of the form $(-n-1,i_1,\ldots,i_k)$ with $\mathit{l}(\lambda)=k,|\lambda|=-1$, we have $f_K(\lambda)$ equals
+\[\sum_{d=0}^k a_{k,d}\sigma_d(i_1,\ldots,i_k),\]
+
+where $\sigma_d(i_1,\ldots,i_k)$ is the elementary symmetric polynomial in $i_1,\ldots,i_k$ and the coefficients satisfy the following:
+\[
+\begin{aligned}
+&\sum_{k=1}^{+\infty}\frac{a_{k,0}}{k!}x^k = \frac{x^2}{1-x^2}\\
+&\sum_{k=1}^{+\infty}-\frac{a_{k,1}}{(k-1)!}x^{k-1} = \frac{1}{(1+x)(1-x^2)}\\
+&\sum_{k=d}^{+\infty}\frac{(-1)^da_{k,d}}{2d!(d-1)!(k-d)!}x^{k-d} = \frac{1}{(1-x)^{d-3}(1-x^2)^3}, \text{ for } d\geqslant2
+\end{aligned}
+\]
+\end{prop}
+These formulas can be proven by induction on $d$.
+
+\begin{prop}
+For generalized partition $\lambda$ of the form $(-i_k,\ldots,-i_1,n-1)$ with $\mathit{l}(\lambda)=k,|\lambda|=-1$, we have $f_K(\lambda)$ equals
+\[\sum_{d=0}^k b_{k,d}\sigma_d(i_1,\ldots,i_k),\]
+
+where $\sigma_d(i_1,\ldots,i_k)$ is the elementary symmetric polynomial in $i_1,\ldots,i_k$ and the coefficients satisfy the following:
+\[
+\begin{aligned}
+&\sum_{k=1}^{+\infty}\frac{b_{k,0}}{k!}x^k = \frac{x}{1-x}\\
+&\sum_{k=1}^{+\infty}\frac{-b_{k,1}}{(k-1)!}x^{k-1} = \frac{1}{(1+x)(1-x^2)}\\
+&\sum_{k=2}^{+\infty}\frac{-b_{k,2}}{4(k-2)!}x^{k-1} = \frac{1}{(1+x)(1-x^2)^2}\\
+&\sum_{k=d}^{+\infty}\frac{-b_{k,d}}{2d!(d-1)!(n-d)!}x^{k-d} = \frac{1}{(1-x)^{d-3}(1-x^2)^3}, \text{ for } d\geqslant 3
+\end{aligned}
+\]
+\end{prop}
+
+Let $f_k(x_1,\ldots,x_k)=\sum_{d=0}^ka_{k,d}\sigma_d(x_1,\ldots,x_k)$ at the beginning and $g_d = \sum_{k=d}^{+\infty}a_{k,d}\sigma_d(x_1,\ldots,x_k)$. Then 
+\[
+\begin{aligned}
+g_d|_\Delta&=\sum_{k=d}^{+\infty}\binom{k}{d}a_{k,d}x^k\\
+&=x^d\sum_{k=d}^{+\infty}\binom{k}{d}a_{k,d}x^{k-d}.
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\sum_{k=0}^{+\infty}\frac{1}{k!}f_k|_\Delta&=\sum_{d=0}^{+\infty}x^d\sum_{k=d}^{+\infty}\frac{1}{k!}\binom{k}{d}a_{k,d}x^{k-d}\\
+&=\sum_{k=0}^{+\infty}\frac{1}{k!}a_{k,0}x^{k}+x\sum_{k=1}^{+\infty}\frac{1}{(k-1)!}a_{k,1}x^{k-1}+2\sum_{d=2}^{+\infty}\frac{(-1)^d}{(d-1)!}x^d\frac{1}{(1-x)^d(1+x)^3}\\
+&=\frac{1}{1-x^2}-\frac{x}{(1-x)(1+x)^2}+\frac{2}{(1+x)^3}\sum_{d=2}^{+\infty}\frac{(-1)^d}{(d-1)!}\frac{x^d}{(1-x)^d}
+\end{aligned}
+\]
+where $\Delta$ is the diagonal s.t. $x_1=x_2=\ldots$.
+
+\begin{example}
+For $\lambda = (-i_1-i_2-1,i_1,i_2)$, $f_K(\lambda) = 4i_1i_2-i_1-i_2+2$;\\
+For $\lambda = (-i_1, -i_2,i_1+i_2-1)$,  $f_K(\lambda) = -4i_1i_2-i_1-i_2+2$;\\
+Then we can use induction formula to compute $f_K(\lambda)$ for $\lambda = (-j_2, -j_1, i_1, i_2)$ with $j_2>j_1$, $i_2>i_1$ and $j_1+j_2=i_1+i_2+1$:
+\[
+\begin{aligned}
+f_K(\lambda) = &-\frac{1}{2}(-1)3!(i_1^2+i_2^2-j_1^2-j_2^2-1)\\
+			&- (-j_2+i_1)f_K((-j_2+i_1, -j_1,i_2)) - (-j_2+i_2)f_K((-j_2+i_2,-j_1,i_1))\\
+			&- (-j_1+i_2)f_K((-j_1+i_2,-j_2,i_1)) - (-j_1+i_1)f_K((-j_1+i_1, -j_2, i_2))\\
+			&- (i_1+i_2)f_K((-j_2,-j_1,i_1+i_2)) - (-j_1-j_2)f_K((-j_1-j_2,i_1,i_2))
+\end{aligned}
+\]
+$\mathit{Case\text{ }1.}\text{ } i_1<j_1<j_2<i_2$:
+\[
+\begin{aligned}
+f_K(\lambda) = &-4j_2^2j_1 - 4j_2j_1^2 - 4j_2^2i_1 + 20j_2j_1i_1 - 4j_1^2i_1 - 4j_2i_1^2 - 4j_1i_1^2 \\
+&+ 4j_2j_1i_2 + 12j_2i_1i_2 + 12j_1i_1i_2 - 8i_1i_2^2 - 3j_2^2 + 2j_2j_1 - 3j_1^2\\
+& - 2j_2i_1 - 2j_1i_1 + 5i_1^2 + 2j_2i_2 + 2j_1i_2 - 2i_1i_2 + i_2^2 + 6j_2 + 6j_1 - 6i_1 - 6i_2 - 3\\
+= &-24j_1^2i_1 + 24j_1i_1^2 - 8i_1^3 + 24j_1i_1i_2 - 4j_1^2 + 28j_1i_1 - 12i_1^2 + 4j_1i_2 - 4i_1i_2 + 4j_1 - 12i_1 - 4i_2\\
+= &24j_2j_1i_1 - 8i_1^3 + 4j_2j_1 - 4j_2i_1 - 4j_1i_1 - 8i_1^2 - 4j_2 - 4j_1 - 4i_1 + 4\\
+= &-8i_1^3-8i_1^2+(24j_2j_1 - 4j_2 - 4j_1 - 4)i_1+4j_1j_2-4j_1-4j_2+4
+\end{aligned}
+\]
+In this case $f_K$ is symmetric in $j_1,j_2$, but not in $i_1,i_2$
+\\
+$\mathit{Case\text{ }2.}\text{ } j_1<i_1<i_2<j_2$:
+\[
+\begin{aligned}
+f_K(\lambda) = &-8j_2^2j_1 + 12j_2j_1i_1 - 4j_1^2i_1 - 4j_1i_1^2 + 12j_2j_1i_2 - 4j_1^2i_2 + 4j_2i_1i_2 + 20j_1i_1i_2 - 4i_1^2i_2 - 4j_1i_2^2 - 4i_1i_2^2\\
+& - j_2^2 + 2j_2j_1 - 5j_1^2 - 2j_2i_1 + 2j_1i_1 + 3i_1^2 - 2j_2i_2 + 2j_1i_2 - 2i_1i_2 + 3i_2^2 + 6j_2 + 6j_1 - 6i_1 - 6i_2 - 3\\
+= &-8j_1^3 + 24j_1i_1i_2 + 8j_1^2 + 4j_1i_1 + 4j_1i_2 - 4i_1i_2 - 4j_1 - 4i_1 - 4i_2 + 2\\
+= &-8j_1^3+8j_1^2+(24i_1i_2 + 4i_1 + 4i_2 - 4)j_1- 4i_1i_2 - 4i_1 - 4i_2 + 2\\
+= &8j_2^3 - 24j_2^2i_1 + 24j_2i_1^2 - 8i_1^3 - 24j_2^2i_2 + 24j_2i_1i_2 + 24j_2i_2^2 - 8i_2^3\\
+& - 16j_2^2 + 28j_2i_1 - 12i_1^2 + 28j_2i_2 - 4i_1i_2 - 12i_2^2 + 12j_2 - 12i_1 - 12i_2 - 2\\
+= &8j_2^3 - (24i_1 + 24i_2 + 16)j_2^2 + (24i_1^2 + 24i_1i_2 + 24i_2^2 + 28i_1 + 28i_2 + 12)j_2\\
+& - (8i_1^3 + 8i_2^3 + 12i_1^2 + 4i_1i_2 + 12i_2^2 + 12i_1 + 12i_2 + 2)\\
+= &-4i_1^2i_2 - 4i_1i_2^2 + (-4j_1 + 3)(i_1^2 + i_2^2)+ (4j_2 + 20j_1 - 2)i_1i_2\\
+& + (12j_2j_1 - 4j_1^2 - 2j_2 + 2j_1 - 6)(i_1 + i_2) -8j_2^2j_1 - j_2^2 + 2j_2j_1 - 5j_1^2 + 6j_2 + 6j_1 - 3
+\end{aligned}
+\]
+In this case $f_K$ is symmetric in $i_1,i_2$, but not in $j_1,j_2$
+\\
+$\mathit{Case\text{ }3.}\text{ } i_1=j_1,i_2+1=j_2$:
+\\
+$\mathit{Case\text{ }4.}\text{ } i_1+1=j_1,i_2=j_2$:
+\end{example}
+\begin{prop}{(TC TANG)}
+\[
+\begin{aligned}
+&\frak{G}_2(\alpha) = -\sum_{l(\lambda)=4,|\lambda|=0}\frac{1}{\lambda!}\frak{a}_{\lambda}(\tau_*\alpha) + \sum_{l(\lambda) = 2,|\lambda|=0}\frac{s(\lambda)-2}{24\lambda!}\frak{a}_{\lambda}(\tau^*e_X\alpha)\\
+& - \sum_{l(\lambda) = 3, |\lambda| = 0, j = max\{|i|\}}\frac{j-1}{2\lambda!}\frak{a}_\lambda(\tau_*(K_X\alpha))-\sum_{j>0}\frac{(n-1)(2n-1)}{12\lambda!}\frak{a}_{-j}\frak{a}_j(\tau_*(K_X^2\alpha))
+\end{aligned}
+\]
+\end{prop}
+
+\subsection{Another example}
+
+Consider a partition $\lambda = (i_0,i_1,\ldots)$ and the function $f_K(-|\lambda|, -1,i_0,i_1,\ldots)$. Suppose
+\[
+\begin{aligned}
+f_K(-|\lambda|, -1,i_0,i_1,\ldots,i_l) &= \sum_{d=0}^{l+1} c_{l,d}m_{(1^d)}(i_0,\ldots,i_l),\\
+f_K(-|\lambda| -1,i_0,i_1,\ldots,i_l) &= \sum_{d=0}^{l+1} a_{l,d}m_{(1^d)}(i_0,\ldots,i_l),
+\end{aligned}
+\]
+
+\begin{prop}
+then by induction formula above there is 
+\[\begin{aligned}
+f_K(-|\lambda|, -1,i_0,i_1,\ldots,i_l) = &(-1)^l(l+2)!m_{(1^2)}+ (-1)^l(l+2)! - \sum_{d=0}^{l+1}((l-d+1)a_{l,d+1}-(l+d+2)a_{l,d})m_{(1^d)}\\
+&-\sum_{d=2}^{l+1}c_{l-1,d-1}d(d-1)m_{(1^d)}.
+\end{aligned}\]
+Further, there are recursive formulas on the coefficients $c_{l,d}$ as following:
+\[\begin{aligned}
+c_{l,0} &= (-1)^l(l+2)! - ((l+1)a_{l,1}-(l+2)a_{l,0})\\
+c_{l,1} &= -la_{l,2}+(l+3)a_{l,1}\\
+c_{l,2} &= (-1)^l(l+2)! - ((l-1)a_{l,3}-(l+4)a_{l,2})-c_{l-1,1}\\
+c_{l,d} &= -d(d-1)c_{l-1,d-1} - (l-d+1)a_{l,d+1} + (l+d+2)a_{l,d}, \text{	}d\geqslant3.
+\end{aligned}\]
+The basic case $f_K(-i_0,-1,i_0) = -3i_0+3$.
+\end{prop}
+
+\begin{proof}
+Suppose $f_K(-|\lambda|, -1,i_0,i_1,\ldots,i_l) = const. - A - B -C -D$ where 
+\[\begin{aligned}
+const. =& -\frac{1}{2} (-1)^l (l+2)! (i_0^2+\cdots+i_l^2-(i_0+\cdots+i_l)^2-2)\\
+A =& \sum_{k}(i_k-1)f_K(-i_0-\ldots-i_l,i_0,\ldots,i_k-1,\ldots,i_l)\\
+B=& \sum_k -(i_0+\cdots+ \hat{i_k} +\cdots+i_l)f_K(-(i_0+\cdots+ \hat{i_k} +\cdots+i_l), -1, i_0,\ldots, \hat{i_k}, \ldots,i_l)\\
+C =& \sum_{j<k} (i_j+i_k)f_K(-(i_0+\cdots+i_l), -1, i_0,\ldots, \hat{i_k},\ldots,\hat{i_k}, \ldots, i_l, i_j+i_k)\\
+D =& -(i_0+\cdots+i_l+1)f_K(-(i_0+\cdots+i_l+1),i_0,\ldots,i_l)
+\end{aligned}\]
+\\
+After expansion
+\[\begin{aligned}
+const. =& (-1)^l (l+2)! (m_{(1^2)+1})\\
+A =& \sum_{d=0}^{l+1} a_{l,d}m_{(1)}m_{(1^d)} + \sum_{d=1}^l((l-d+1)a_{l,d+1}-(l+d+1)a_{l,d})m_{(1^d)}\\
+&-2a_{l,l+1}(l+1)m_{(1^{l+1})} + (l+1)(a_{l,0}-a_{l,1})\\
+B=& -\sum_{d=1}^l (l+1-d)c_{l-1,d}  m_{(2,1^{d-1})} -\sum_{d=0}^l (l+1-d)c_{l-1,d}  (d+1)m_{(1^{d+1})} + \sum_{d=1}^{l+1}c_{l-1,d-1}dm_{(1^d)}\\
+C =& c_{l-1,0}lm_{(1)} + \sum_{d=1}^lc_{l-1,d}(l(d+1)m_{(1^{d+1})} + (l-d+1)m_{(2,1^{d-1})})\\
+D =& -\sum_{d=0}^{l+1} a_{l,d}m_{(1)}m_{(1^d)} - \sum_{d=0}^{l+1}a_{l,d}m_{(1^d)}
+\end{aligned}\]
+By summing up $A,D$ and $B,C$:
+\[\begin{aligned}
+A+D =& \sum_{d=0}^{l+1}\lr{ (l-d+1)a_{l,d+1} - (l+d+2)a_{l,d} }m_{(1^d)}\\
+B+C =& \sum_{d=0}^l (d-1)c_{l-1,d}  (d+1)m_{(1^{d+1})} + \sum_{d=1}^{l+1}c_{l-1,d-1}dm_{(1^d)}\\
+=& \sum_{d=0}^l (d-1)c_{l-1,d}  (d+1)m_{(1^{d+1})} + \sum_{d=0}^{l}c_{l-1,d}(d+1)m_{(1^{d+1})}\\
+=& \sum_{d=0}^l c_{l-1,d}  d(d+1)m_{(1^{d+1})}\\
+=&\sum_{d=1}^{l+1} c_{l-1,d-1}  d(d-1)m_{(1^d)}\\
+\end{aligned}\]
+\end{proof}
+
+\begin{prop}
+The coefficients $c_{l,d}$ fills in the following generating functions:
+\[\begin{aligned}
+\sum_{l=0}^{+\infty}\frac{c_{l,0}}{(l+1)!}x^l &= \frac{3+x}{(1-x^2)^2}\\
+\sum_{l=0}^{+\infty}\frac{c_{l,1}}{l!}x^l &= -\frac{3}{(1-x^2)^2}\\
+\sum_{l=1}^{+\infty}\frac{c_{l,2}}{4(l-1)!}x^{l-1} &= \frac{11x+5}{(1-x)^3(1+x)^4}\\
+\frac{(-1)^d}{2d!(d-1)!}\sum_{l=d-1}^{+\infty}\frac{c_{l,d}}{(l+1-d)!}x^{l+1-d} &= \frac{(d^2+2d+3)x+(d^2+2d-3)}{(1-x)^{d+1}(1+x)^4},\text{     }d\geqslant2\\
+\end{aligned}\]
+\end{prop}
+\begin{proof}
+
+For cases $d = 0,1,2$, the formulas can be checked directly.
+
+For $d\geqslant 3$, we can make use of the induction formula in the above proposition:
+\[\begin{aligned}
+\sum_{l=d-1}^{+\infty}\frac{c_{l,d}}{(l+1-d)!} x^{l+1-d} &= -d(d-1)\sum_{l=d-2}^{+\infty}\frac{c_{l,d-1}}{(l+2-d)!}x^{l+2-d}\\ &+ (-1)^d2(d-1)!d!\frac{ (d^2+2)x^2 + (d^2+2d-3)x + (2d+1) }{(1-x)^{d+1}(1+ x)^4}\\
+\iffalse
+\sum_{l=2}^{+\infty}\frac{c_{l,3}}{(l-2)!}x^{l-2} &= -144\frac{3x+2}{(1-x)^4(1+x)^4}\\
+\sum_{l=3}^{+\infty}\frac{c_{l,4}}{(l-3)!}x^{l-3}&=864\frac{9x+7}{(1-x)^5(1+x)^4}\\
+\sum_{l=4}^{+\infty}\frac{c_{l,5}}{(l-4)!}x^{l-4}&=-11520\frac{19x+16}{(1-x)^6(1+x)^4}\\
+\sum_{l=5}^{+\infty}\frac{c_{l,6}}{(l-5)!}x^{l-5}&=518400\frac{17x+15}{(1-x)^7(1+x)^4}\\
+\sum_{l=6}^{+\infty}\frac{c_{l,7}}{(l-6)!}x^{l-6}&=-43545600\frac{11x+10}{(1-x)^7(1+x)^4}\\\fi
+\end{aligned}\]
+\end{proof}
+\section{Second point of view}
+\begin{prop}
+For Nakajima operators $\{\alpha_{k,S};k\in\mathbb{Z}\}$, surface $S$ having Torus action with fixed points $s$, there is 
+\[\alpha_{k,S}(c)=\sum_{s,n_s-m_s=k}1\otimes\cdots\otimes \alpha_{k,T_sS}(c|_{U_s})\otimes\cdots\otimes1\]
+\end{prop}
+
+Similarly, $$\mathfrak{a}_{k,S}^{(n)}(c)=\sum_{s,n_s-m_s=k}1\otimes\cdots\otimes \mathfrak{a}_{k,T_sS}^{(n)}(c|_{U_s})\otimes\cdots\otimes1.$$
+Apply LQW's formula for $\mathfrak{a}_{k,S}^{(n)}(c)$, we would get 
+\[
+\begin{aligned}
+&\sum_{\epsilon\in\{1,e,K,K^2\}} \sum_{\mathit{l}(\lambda)=n+1-|\epsilon|/2,|\lambda|=k} \frac{f_\epsilon(\lambda)} {\lambda!} \mathfrak{a}_\lambda(\tau_*(\epsilon c))\\
+=&\sum_{s,n_s-m_s=k}1\otimes\cdots\otimes \mathfrak{a}_{k,T_sS}^{(n)}(c|_{U_s})\otimes\cdots\otimes1\\
+=&\sum_{s,n_s-m_s=k}1\otimes\cdots\otimes \sum_{\mathit{l}(\lambda)=n+1,|\lambda|=k} \frac{(-k)^nn!} {\lambda!} \mathfrak{a}_\lambda(\tau_*(c|_{U_s}))\otimes\cdots\otimes1
+\end{aligned}
+\]
+Next, let's consider the expansion of exponential function
+\[
+\exp\left(\sum_{k\in \mathbb{Z}_{<0}}t^{-k}\mathfrak{a}_k\right)=\sum_{n\geqslant0}\left(t^n\sum_{\lambda\vdash n}\frac{1}{\lambda!}\mathfrak{a}_{-\lambda}\right)
+\]
+and
+\[
+\exp\left(\sum_{k\in \mathbb{Z}_{>0}}t^{-k}\mathfrak{a}_k\right)=\sum_{n\geqslant0}\left(t^{-n}\sum_{\lambda\vdash n}\frac{1}{\lambda!}\mathfrak{a}_{\lambda}\right)
+\]
+In another way, we have the combinatoric equality(E. Carlsson, 'Vertex Operators and Moduli Spaces of Sheaves'):
+\[
+\begin{aligned}
+&\left<\exp\left(\frac{m}{t_1t_2}\sum_n(-1)^{n+1}\frac{\partial}{\partial p_n}\right)\tilde{J_\mu},\exp\left(\frac{m+t_1+t_2}{t_1t_2}\sum_n(-1)^{n+1}\frac{\partial}{\partial p_n}\right)\tilde{J_\lambda}\right>_{t_1,t_2}\\
+=&\prod_{\square\in\mu}\left(m+t_1a_\lambda(\square)+t_1-t_2l_\mu(\square)\right)\prod_{\square\in\lambda}\left(m-t_1a_\mu(\square)+t_2+t_2l_\lambda(\square)\right).
+\end{aligned}
+\]
+Here, Nakajima operators is seen as operators in the ring of symmetric polynomials in infinitely many variables $\Lambda^*\otimes\mathbb{C}(t_1,t_2)$, where $\mathfrak{a}_{-k}\mapsto(f\mapsto p_kf)$ and $\mathfrak{a}_k\mapsto\frac{k}{t_1t_2}\frac{\partial}{\partial p_k}$, with $p_k = \sum_i x_i^k$.
+The inner product takes the form
+\[\left<p_\mu,p_\lambda\right>_{t_1,t_2}=(-1)^{|\mu|-l(\mu)}\left(\frac{1}{t_1t_2}\right)^{l(\mu)}\mathfrak{z}(\mu)\delta_{\mu,\lambda}\]where $\mathfrak{z}(\mu)=(\prod_i\mu_i)(\prod_k|\{i|\mu_i=k\}|!)$. $\frak{z}(\mu)=z_\mu$ in Macdonald's notation.The fixed point basis transforms as 
+\[
+[I_\mu]\mapsto \tilde{J}_\mu = \theta^{|\mu|}P_{\mu}^{(\theta)}.
+\]
+Here $P^{(\theta)}$ is the integral form of the Jack polynomial, and we have normalized $\tilde{J}_\mu$ so that $\left<\tilde{J}_\mu, p_1^n\right>_{t_1,t_2} = 1$ where $\mu\vdash n$. 
+$\theta=1/\alpha=t_1t_2$ where $\alpha$ is the notation in Macdonald's book.
+
+Come back to $\mathfrak{a}_{k,S}^{(n)}(c):H^*(S^{[m]})\to H^*(S^{[m-k]})$. Take the specialization $k=-1, c=1$, there would be
+\[
+\frac{1}{n!}\frak{a}_{-1,S}^{(n)}=\sum_{\text{fixed pts }s} 1\otimes\cdots\otimes\left(\sum_{|\lambda|=|\mu|+1,l(\lambda)+l(\mu)=n+1}\frac{1}{\lambda!\mu!}\frak{a}_{-\lambda}\frak{a}_{\mu}\right)\otimes\cdots\otimes1
+\]
+Summing over the order of derivative $n$, we have 
+\[
+\begin{aligned}
+\sum_{n\geqslant 0} \frac{1}{n!}\frak{a}_{-1,S}^{(n)} &= \sum_{\text{fixed pts }s} 1\otimes\cdots\otimes\left(\sum_{|\lambda|=|\mu|+1}\frac{1}{\lambda!\mu!}\frak{a}_{-\lambda}\frak{a}_{\mu}\right)\otimes\cdots\otimes1\\
+&= \sum_{\text{fixed pts }s} 1\otimes\cdots\otimes\left([t^{-1}]\exp\left(\sum_{k\in \mathbb{Z}_{<0}}t^{-k}\mathfrak{a}_k\right)\exp\left(\sum_{k\in \mathbb{Z}_{>0}}t^{-k}\mathfrak{a}_k\right)\right)\otimes\cdots\otimes1
+\end{aligned}
+\]
+In the case of $(\mathbb{C}^2)^{[n]}$, the matrix entry $\left<\frak{a}_{-1}^{(n)}[I_\lambda], [I_\mu]\right>$ is known. Consider the action of torus $T=(\mathbb{C}^{\times})^2$ on $\mathbb{A}^2$ via $(z_1,z_2)\cdot(u,v)=(z_1u,z_2v)$. $q,t$ are character of $T$ given by \[q(z_1,z_2)=z_1^{-1}\text{,         }t(z_1,z_2)=z_2^{-1}\]
+The Grothendieck group class $T_\lambda$ of tangent space at fixed point $I_\lambda$ is 
+\[T_\lambda = \sum_{\square\in\lambda}(t^{l(\square)}q^{-a(\square)-1}+t^{-l(\square)-1}q^{a(\square)})\]
+we have the following formulas:
+\[
+\frak{a}_{-1}^{(n)}([I_\mu]) = \frac{1}{qt}\sum_{\mu\subset\lambda}(x(\lambda\backslash\mu)q-y(\lambda\backslash\mu)t)^nL_{\mu,\lambda}(q,t)[I_\lambda]
+\]
+where 
+\[
+L_{\mu,\lambda}(q,t) = \prod_{\s\in C_{\lambda\backslash\mu}}\frac{l_\mu(\s)t-(a_{\mu}(\s)+1)q}{(l_\lambda(\s)+1)t-(a_\lambda(\s)+1)q}\prod_{\s\in R_{\lambda\backslash\mu}}\frac{(l_\mu(\s)+1)t-a_{\mu}(\s)q}{(l_\lambda(\s)+1)t-(a_\lambda(\s)+1)q}\]
+
+In E. Carlsson's paper we can get 
+\[\frak{a}_{-1}[I_{(1^k)}] = \frac{1}{t_2(t_1-kt_2)}[I_{(1^{k+1})}]+u(t_1,t_2)[I_{(2,1^k)}]\]
+In O. Schiffman's paper we can get
+\[\frak{a}_{-1}[I_{(1^k)}] = \frac{1}{qt-kt^2}[I_{(1^{k+1})}]+\frac{k}{kqt-q^2}[I_{(2,1^k)}]\]
+so we can make the identification : $q\mapsto t_1$ and $t\mapsto t_2$ in the two settings.
+
+We have $\left<\frak{a}_{-k}(c)([I_\mu]),[I_\lambda]\right>=\left<[I_\mu],(-1)^{k-1}\frak{a}_{k}(c)([I_\lambda])\right>$. Try to verify that
+\[\Gamma(\mathcal{L},z)^*=(-1)^d\Gamma(\mathcal{K}-\mathcal{L},z)(-1)^d\]
+and\[W(\mathcal{L},z)^*=(-1)^dW(\mathcal{K}-\mathcal{L},z)(-1)^d\]
+\begin{prop}We have the following relations:\\
+(1) $\Gamma(\mathcal{L},z)^*=(-1)^{\dd}\Gamma(\mathcal{K}-\mathcal{L},z)(-1)^{\dd}$,\\
+(2) $W(\mathcal{L},z)^*=(-1)^{\dd}W(\mathcal{K}-\mathcal{L},z)(-1)^{\dd}$.
+\end{prop}
+\begin{proof}
+(1) By definition, 
+\[\Gamma(\cc{L})=\exp\lr{\sum_{n>0}\frac{(-1)^{n-1}z^n}{n}\frak{a}_{-n}(\cc{L})}\exp\lr{-\sum_{n>0}\frac{z^{-n}}{n}\frak{a}_n(\cc{K-L})}\]
+\[\Gamma(\cc{K-L})=\exp\lr{\sum_{n>0}\frac{(-1)^{n-1}z^n}{n}\frak{a}_{-n}(\cc{K-L})}\exp\lr{-\sum_{n>0}\frac{z^{-n}}{n}\frak{a}_n(\cc{L})}\]
+Then we have 
+\[
+\begin{aligned}
+\lr{(-1)^{\dd}\Gamma(\cc{K-L})(-1)^{\dd}J,I}&=(-1)^{k+l}\lr{\Gamma(\cc{K-L})J,I}\\
+&=(-1)^{k+l}\lr{\exp\lr{-\sum_{n>0}\frac{z^{-n}}{n}\frak{a}_n(\cc{L})}J,\exp\lr{\sum_{n>0}\frac{z^n}{n}\frak{a}_{n}(\cc{K-L})}I}\\
+&=(-1)^{k+l}\lr{z^{-m}\sum_{\lambda\vdash m}\frac{(-1)^{m}}{\lambda!\prod \lambda_i}\frak{a}_{\lambda}(\cc{L})J,z^{m+l-k}\sum_{\mu\vdash m+l-k}\frac{1}{\mu!\prod \mu_i}\frak{a}_{\mu}(\cc{K-L})I}\\
+&=(-1)^{m+k+l}z^{l-k}\lr{\sum_{\lambda\vdash m}\frac{(-1)^{m}}{\lambda!\prod \lambda_i}\frak{a}_{\lambda}(\cc{L})J,\sum_{\mu\vdash m+l-k}\frac{1}{\mu!\prod \mu_i}\frak{a}_{\mu}(\cc{K-L})I}\\
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\lr{\Gamma(\cc{L})I,J}&=\lr{\exp\lr{\sum_{n>0}-\frac{z^{-n}}{n}\frak{a}_{n}(\cc{K-L})}I,\exp\lr{\sum_{n>0}\frac{z^{n}}{n}\frak{a}_n(\cc{L})}J}\\
+&=\lr{z^{-m'}\sum_{\mu\vdash m'}\frac{(-1)^{m'}}{\mu!\prod \mu_i}\frak{a}_{\mu}(\cc{K-L})I,z^{m'+k-l}\sum_{\lambda\vdash m'+k-l}\frac{1}{\lambda!\prod \lambda_i}\frak{a}_{\lambda}(\cc{L})J}\\
+&=(-1)^{m'}z^{k-l}\lr{\sum_{\mu\vdash m'}\frac{1}{\mu!\prod \mu_i}\frak{a}_{\mu}(\cc{K-L})I,\sum_{\lambda\vdash m'+k-l}\frac{1}{\lambda!\prod \lambda_i}\frak{a}_{\lambda}(\cc{L})J}\\
+&=(-1)^{m+l-k}z^{k-l}\lr{\sum_{\mu\vdash m+l-k}\frac{1}{\mu!\prod \mu_i}\frak{a}_{\mu}(\cc{K-L})I,\sum_{\lambda\vdash m}\frac{1}{\lambda!\prod \lambda_i}\frak{a}_{\lambda}(\cc{L})J}
+\end{aligned}
+\]
+(2)For $I\in Hilb_k$ and $J\in Hilb_l$
+\[
+\begin{aligned}
+\left((-1)^{\dd}W(\mathcal{K}-\mathcal{L},z)(-1)^{\dd}J,I\right)&=(-1)^{k+l}\left(W(\mathcal{K}-\mathcal{L},z)J,I\right)\\
+&=(-1)^{k+l}z^{k-l}\int_{\Hilb_k\times \Hilb_l}J\cup I\cup e(E)
+\end{aligned}
+\]
+where $E(\mathcal{K-L})|_{(J,I)}=\chi(\mathcal{K-L})-\chi(J,I\otimes\mathcal{K}\otimes\mathcal{L}^{-1})=E(\mathcal{L})|_{(I,J)}.$\\ 
+Thus there is \[z^{l-k}\left((-1)^{\dd}W(\mathcal{K}-\mathcal{L},z)(-1)^{\dd}J,I\right)=z^{k-l}\left(W(\mathcal{L},z)I,J\right)\]
+\end{proof}
+So the accurate expression should be $W(\cc{L},z)^*|_{z^l}=(-1)^{\dd}W(\mathcal{K}-\mathcal{L},z)(-1)^{\dd}|_{z^{-l}}$ where $\dd$ is the number of points operator such that $\dd|_{H^*(\Hilb_n)}=n\id$. If $z$ is specialized at 1 but not seen as a formal variable then there is no confusion.\\
+
+In the combinatoric setting, for $\lambda=(1^{m_1}2^{m_2}\ldots k^{m_k}\ldots)$ and $\lambda'=(1^{m_1}2^{m_2}\ldots k^{m_k+1}\ldots)$
+\[
+\begin{aligned}
+\inprod{p_kp_\lambda,p_{\lambda'}}&=(-1)^{|\lambda|-l(\lambda)+k-1}\lr{\frac{1}{t_1t_2}}^{l(\lambda)+1}k(m_k+1)\frak{z}(\lambda),\\
+\inprod{p_\lambda,\frac{k}{t_1t_2}\frac{\p}{\p p_k}p_{\lambda'}}&=\frac{k(m_k+1)}{t_1t_2}(-1)^{|\lambda|-l(\lambda)}\lr{\frac{1}{t_1t_2}}^{l(\lambda)}\frak{z}(\lambda).
+\end{aligned}
+\]
+So indeed $p_k^* = (-1)^{k-1}\frac{k}{\alpha}\frac{\p}{\p p_k}$.
+
+\begin{prop}
+We have the decomposition:\\
+(1) $W_S(\cc{L})=\bigotimes_{\text{fixed pts }p_i}W_{T_{p_i}S}\lr{\cc{L}|_{\bb{C}^2_{p_i}}}$,\\
+(2) $\Gamma_S(\cc{L})=\bigotimes_{\text{fixed pts }p_i}\Gamma_{T_{p_i}S}\lr{\cc{L}|_{\bb{C}^2_{p_i}}}$.
+\end{prop}
+\begin{proof}
+The second formula is easy by using \[\frak{a}_{k,S}(\cc{L})=\sum_{p_i}\frak{a}_{k,T_{p_i}S}(\cc{L}|_{\bb{C}_{p_i}^2}).\]
+For the first formula, we need to show 
+\[
+\lr{W_S(\cc{L})[I_{\lambda^1,\ldots,\lambda^M}],[I_{\mu^1,\ldots,\mu^M}]}
+\]
+\end{proof}
+
+\subsection{Matrix entries}
+Consider the setting $S=\PP^1\times\PP^1$, $T=\C^*\times\C^*\times\C^*$, $\cc{L}=\cc{O}(m)$ in 'Exts and Vertex Operators'. Take two partitions $\mu$ and $\nu$ such that $|\mu|=k$ and $|\nu|=l$ and consider
+\[a^{(n)}_{\mu,\nu}=\lr{\frak{a}^{(n)}_{S}\frak{a}_{-\mu,S}(L_1)\vacuum,\frak{a}_{-\nu,S}(L_2)\vacuum}\]where \[L_1 = \{\pt\}\times\PP^1\text{ ,     }L_2=\PP^1\times\{\pt\}.\]Apply the decomposition of $\frak{a}^{(n)}_k$ we have 
+\[
+a^{(n)}_{\mu,\nu}=\sum_{\mu^{[00]},\mu^{[0\infty]},\mu^{[\infty0]},\mu^{[\infty\infty]}}\sum_{\nu^{[00]},\nu^{[0\infty]},\nu^{[\infty0]},\nu^{[\infty\infty]}}\sum_{a,b}a^{(n),[ab]}_{\C^2}(\mu^{[ab]},\nu^{[ab]}).
+\]
+where $\mu^{[a0]}\sqcup\mu^{[a\infty]}=\mu^{[a]}$, $\mu^{[0]}\sqcup\mu^{[\infty]}=\mu$, same for other notations.\\
+
+The coefficient 
+\[
+\begin{aligned}
+a^{(n)}_{\C^2}(\mu,\nu) &= \lr{\frak{a}^{(n)}_{-1,\C^2}\frak{a}_{-\mu}(L_1|_{\C^2})\vacuum,\frak{a}_{-\nu}(L_2|_{\C^2})\vacuum}\\
+&=n!\sum_{|\lambda^+|=|\lambda^-|+1}\frac{1}{\lambda^+!\lambda^-!}\lr{\frak{a}_{-\lambda^+}\frak{a}_{\lambda^-}\frak{a}_{-\mu}\vacuum,\frak{a}_{-\nu}\vacuum}
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\frac{1}{n!}a^{(n)}_{\C^2}(\mu,\nu) &= \sum_{|\lambda^+|=|\lambda^-|+1}\frac{(-1)^{|\lambda^-|}}{\lambda^+!\lambda^-!}\lr{\frak{a}_{\lambda^-}\frak{a}_{-\mu}\vacuum,\frak{a}_{\lambda^+}\frak{a}_{-\nu}\vacuum}\\
+&=\sum_{|\lambda^+|=|\lambda^-|+1}\frac{(-1)^{|\lambda^-|}}{\lambda^+!\lambda^-!}\inprod{\frac{\prod\lambda^-_i}{(t_1t_2)^{|\lambda^-|}}\lr{\frac{\p}{\p p}}_{\lambda^-}p_\mu,\frac{\prod\lambda^+_i}{(t_1t_2)^{|\lambda^+|}}\lr{\frac{\p}{\p p}}_{\lambda^+}p_\nu}\\
+\end{aligned}
+\]
+$\lr{\frac{\p}{\p p}}_{\lambda}p_{\mu}\ne0 $ only when $\lambda\subset \mu$, in which case $\lr{\frac{\p}{\p p}}_{\lambda}p_{\mu} $ is some integer coefficients times $p_{\mu\backslash\lambda}$. So the inner product \[\inprod{\lr{\frac{\p}{\p p}}_{\lambda^-}p_\mu,\lr{\frac{\p}{\p p}}_{\lambda^+}p_\nu}\] is nonzero if $\mu\backslash\lambda^-=\nu\backslash\lambda^+$. This implies the difference $\mu\backslash\lambda^-$ must lie in the intersection of $\mu$ and $\nu$ and $l(\nu)=l(\mu)+1$. \\
+
+Define the falling factorial to be \[a_{[n]}=a(a-1)\cdots (a-n+1),\]then 
+\[\lr{\frac{\p}{\p p}}_{\lambda}p_{\mu}=\prod(m_i)_{[m_i-b_i]}\cdot p_{\beta}=: c(\mu,\beta)p_\beta\]where $\beta = (1^{b_1}\ldots i^{b_i}\ldots)=\mu\backslash\lambda$ and $\mu = (1^{m_1}\ldots i^{m_i}\ldots)$
+
+Thus we can change the index of the sum above
+\[
+\begin{aligned}
+\frac{1}{n!}a^{(n)}_{\C^2}(\mu,\nu)&=\sum_{\beta\subset\mu\cap\nu}\frac{(-1)^{|\mu\backslash\beta|}}{(\nu\backslash\beta)!(\mu\backslash\beta)!}\inprod{\frac{\prod(\mu\backslash\beta)_i}{(t_1t_2)^{|\mu\backslash\beta|}}c(\mu,\beta)p_\beta,\frac{\prod(\nu\backslash\beta)_i}{(t_1t_2)^{|\nu\backslash\beta|}}c(\nu,\beta)p_\beta}\\
+&= \sum_{\beta\subset\mu\cap\nu}\frac{(-1)^{|\mu|-l(\beta)}}{(\nu\backslash\beta)!(\mu\backslash\beta)!}\cdot\frac{\prod(\mu\backslash\beta)_i\prod(\nu\backslash\beta)_i}{(t_1t_2)^{|\mu\backslash\beta|+|\nu\backslash\beta|+l(\beta)}}c(\mu,\beta)c(\nu,\beta)\cdot\frak{z}(\beta).\\
+c(\mu,\beta)\frak{z}(\beta) &= \prod i^{b_i}\cdot \prod m_i(m_i-1)\cdots (b_i+1)\cdot\prod b_i!\\
+&= \prod i^{b_i}\cdot \prod m_i!,\\
+\prod(\mu\backslash\beta)_i\cdot c(\mu,\beta)\frak{z}(\beta) &= \prod i^{m_i-b_i}i^{b_i}\cdot \prod m_i!\\
+&= \frak{z}(\mu).
+\end{aligned}
+\]
+
+We still need to know the expression of \[\lr{\frak{a}_{\lambda,S}(c)\frak{a}_{-\mu,S}(L_1)\vacuum, \frak{a}_{-\nu,S}(L_2)\vacuum}\]
+where $\lambda$ is a generalized partition. When decomposed as operators on $T_sS^{[n]}$, \[\frak{a}_{\lambda,S}(c)=\sum_{\lambda^{[ab]}}\prod_{a,b=0,\infty}\frak{a}_{\lambda^{[ab]},U^{[ab]}}(c|_{U^{[ab]}})\]where the first index means to run over all 4-tuple $(\lambda^{[00]}, \lambda^{[0\infty]}, \lambda^{[\infty0]}, \lambda^{[\infty\infty]})$ such that $\sqcup_{a,b=0,\infty}\lambda^{[ab]}=\lambda.$ Then we should have
+\[
+\begin{aligned}
+&\sum_{\mu^{[ab]}}\sum_{\nu^{[ab]}}\sum_{a,b}a^{(n),[ab]}_{\C^2}(\mu^{[ab]},\nu^{[ab]}) \\
+= &\sum_{\epsilon\in\{1,e,K,K^2\}} \sum_{\mathit{l}(\lambda)=n+1-|\epsilon|/2,|\lambda|=k} \frac{f_\epsilon(\lambda)} {\lambda!} \left(\sum_{\mu^{[ab]}}\sum_{\nu^{[ab]}}\sum_{\lambda^{[ab]}}\prod_{a,b}\lr{\mathfrak{a}_{\lambda^{[ab]}}(\epsilon c|_{U^{ab}})\mu^{[ab]},\nu^{[ab]}}\right)
+\end{aligned}
+\]
+
+\begin{subsection}{Send Fixed Points to Jack Polynomials}
+
+In E. Carlsson's thesis, he proposed the following formulas:
+\[
+\begin{aligned}
+\inprod{[I_{(1^k)}],[I_{(1^k)}]} &= kt^k\prod^{k-1}_{j=0}(q-jt)\\
+\inprod{[I_{(l)}],[I_{(l)}]} &= l!q^l\prod_{j=0}^{l-1}(t-jq)\\
+\end{aligned}
+\]
+By self-intersection formula
+\[
+\begin{aligned}
+\inprod{[I_\lambda],[I_\lambda]} &= \int [I_\lambda]\cup[I_\lambda]\\
+&= c_{top}(T_\lambda)\\
+%prod([(p.leg(s)*t - (p.arm(s) + 1)*q) * (-(p.leg(s) + 1) * t + p.arm(s)*q) for s in p.cells()])
+&= \prod_{s\in \lambda}(l_\lambda(s)t - (a_{\lambda}(s)+1)q)(-(l_\lambda(s)+1)t + a_\lambda(s)q)
+\end{aligned}
+\]
+matches formulas above.\\
+
+%%%%%%%%%
+\iffalse
+On another side, we list some inner products of Jack polynomials:\\
+\\
+%%%%%%%%
+\iffalse
+\[
+\begin{aligned}
+\inprod{P^{(\alpha)}_{(1,1,1)},P^{(\alpha)}_{(1,1,1)}}_\alpha &= 1/6t^3 + 1/2t^2 + 1/3t\\
+\inprod{P^{(\alpha)}_{(2,1)},P^{(\alpha)}_{(2,1)}}_\alpha &= (2t^3 + t^2)/(t + 2)\\
+\inprod{P^{(\alpha)}_{(3)},P^{(\alpha)}_{(3)}}_\alpha &= 3t^3/(t^2 + 3/2t + 1/2)\\
+\end{aligned}
+\]\fi
+%%%%%%%%
+\begin{tabular}{|c|c|c|}
+  \hline
+  \textbf{Partitions} & \textbf{Inner product of $P_{\lambda}^{(\alpha)}$} & \textbf{Inner product of $[I_\lambda]$} \\
+  \hline
+  (1,1,1) & $1/6\alpha^3 + 1/2\alpha^2 + 1/3\alpha$ & $12q^5t - 18q^4t^2 + 6q^3t^3$ \\
+  
+  (2,1) & $(2\alpha^3 + \alpha^2)/(\alpha + 2)$ & $-2q^4t^2 + 5q^3t^3 - 2q^2t^4$ \\
+  
+  (3) & $3\alpha^3/(\alpha^2 + 3/2\alpha + 1/2)$ & $6q^3t^3 - 18q^2t^4 + 12qt^5$ \\
+  \hline
+\end{tabular}\\
+When $\alpha = -q/t$ and $\lambda = (1^k)$, $n!t^nP_{\lambda}$ can be identified with $[I_\lambda]$ since their inner product coincides, but this identification doesn't hold for other $\lambda$. When $\lambda = (2,1)$, $n = |\lambda|$:
+\[
+\begin{aligned}
+(-1)^n\inprod{n!t^nP_{\lambda}^{-q/t},n!t^nP_{\lambda}^{-q/t}} &= (72q^3t^7 - 36q^2t^8)/(-q + 2t) \\
+&= 36q^2t^7(2q-t)/(-q+2t)\\
+\inprod{[I_\lambda],[I_\lambda]} &= q^2t^2(2q-t)(-q+2t)
+\end{aligned}
+\]
+When $\lambda = (2)$, $n = |\lambda|$:
+\[
+\begin{aligned}
+(-1)^n\inprod{n!t^nP_{\lambda}^{-q/t},n!t^nP_{\lambda}^{-q/t}} &= 8q^2t^3/(-q + t) \\
+\inprod{[I_\lambda],[I_\lambda]} &= 2q^2t(-q + t)
+\end{aligned}
+\]
+When $\lambda = (3)$, $n = |\lambda|$:
+\[
+\begin{aligned}
+(-1)^n\inprod{n!t^nP_{\lambda}^{-q/t},n!t^nP_{\lambda}^{-q/t}} &= 216q^3t^8/((q - t) (2q - t))\\
+\inprod{[I_\lambda],[I_\lambda]} &= 6q^3t(-2q + t)(-q + t)
+\end{aligned}
+\]
+Let $\frak{z}_2(\mu) = \prod_k|\{i|\mu_i=k\}|!$
+When $\lambda = (4)$, $n = |\lambda|$:
+\[
+\begin{aligned}
+(-1)^{n}\inprod{\frak{z}_2(\lambda) t^nP_{\lambda}^{-q/t},\frak{z}_2(\lambda) t^nP_{\lambda}^{-q/t}} &= -24\frac{q^4t^{15}}{(q - t)  (2q - t) (3q - t)}\\
+\inprod{[I_\lambda],[I_\lambda]} &= 24q^4t(-3q + t)(-2q + t)(-q + t)
+\end{aligned}
+\]
+When $\lambda = (3,1)$, $n = |\lambda|$:
+\[
+\begin{aligned}
+(-1)^n\inprod{\frak{z}_2(\lambda)t^nP_{\lambda}^{-q/t},\frak{z}_2(\lambda)t^nP_{\lambda}^{-q/t}} &= \frac{(3q - t) q^3 t^{14}}{(q - t)^2}\\
+\inprod{[I_\lambda],[I_\lambda]} &= 4q^3t^2 (3q - t) (q - t)^2 
+\end{aligned}
+\]
+When $\lambda = (2,1,1)$, $n = |\lambda|$:
+\[
+\begin{aligned}
+(-1)^n\inprod{\frak{z}_2(\lambda)t^nP_{\lambda}^{-q/t},\frak{z}_2(\lambda)t^nP_{\lambda}^{-q/t}} &= \frac{4 q^2t^{13}(q - t)^2}{3t-q}\\
+\inprod{[I_\lambda],[I_\lambda]} &= 4q^2t^3(3t - q)(q - t)^2
+\end{aligned}
+\]
+When $\lambda = (2,2)$, $n = |\lambda|$:
+\[
+\begin{aligned}
+(-1)^n\inprod{\frak{z}_2(\lambda)t^nP_{\lambda}^{-q/t},\frak{z}_2(\lambda)t^nP_{\lambda}^{-q/t}} &= \frac{4q^2 t^{14}(2q - t) }{q - 2t}\\
+\inprod{[I_\lambda],[I_\lambda]} &= 4q^2t^2(q - 2t)(2q - t)(q - t)^2
+\end{aligned}
+\]
+Let $J_\lambda = \frak{z}_2(\lambda)t^{|\lambda|}P_{\lambda}^{-q/t}$, inner product takes the form:
+\[\left<p_\mu,p_\lambda\right>_{\alpha}=(-1)^{|\mu|-l(\mu)}\alpha^{l(\mu)}\mathfrak{z}(\mu)\delta_{\mu,\lambda}\]
+
+\begin{tabular}{|c|c|c|}
+  \hline
+  \textbf{Partitions} & \textbf{Inner product of $J_\lambda$} & \textbf{Inner product of $[I_\lambda]$} \\
+  \hline
+    (3) & $6(q - t)^{-1}  (2q - t)^{-1}  q^3  t^8$ & $6 (-2q + t)  (-q + t)  q^3 t $ \\
+    (4) & $(-24)  (q - t)^{-1}  (2q - t)^{-1}  (3q - t)^{-1}  q^4  t^{15}$ & $24(-3q + t)  (-2q + t)  (-q + t)  q^4 t  $\\
+    (5) & $120  \frac{q^5  t^{24}}{(q - t)(2q - t)(3q - t)(4q - t)} $ & $120(-4q + t)  (-3q + t)  (-2q + t)  (-q + t)  q^5t$\\
+  \hline
+\end{tabular}\\
+Make a guess: the degree of $t$ in inner product of $J_\lambda$ is $|\lambda|^2 - l(\lambda)$. \\
+Another guess: 
+
+Let $\lambda'$ be the transpose of a partition, $\lambda^{top}$ be the collection of rightmost cell in each row as illustrated by white cells in the following diagrams:
+
+%%%%%%%
+\iffalse
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+*(cyan) & *(cyan)   & *(cyan)   & *(white)\\
+*(cyan)   & *(white) \\
+*(white)
+\end{ytableau}
+
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+*(cyan) & *(cyan)   & *(cyan)   & *(white)\\
+*(cyan)   & *(cyan) & *(white) \\
+*(cyan) & *(white)\\
+*(white)
+\end{ytableau}
+\fi
+%%%%%%%
+\begin{multicols}{3}
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+*(cyan) & *(cyan)   & *(cyan)   & *(white)\\
+*(cyan)   & *(cyan) & *(white) \\
+*(cyan) & *(cyan) & *(white)\\
+*(white)
+\end{ytableau}
+
+\columnbreak
+
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+*(cyan) & *(cyan)   & *(white)\\
+*(white) \\
+*(white)\\
+*(white)
+\end{ytableau}
+
+\columnbreak
+
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+*(cyan) & *(cyan)   & *(cyan)   & *(white)\\
+*(cyan) & *(white) \\
+*(white) \\
+*(white)
+\end{ytableau}
+\end{multicols}
+Then the relation between two inner product is:
+\[
+\left( \prod_{s\in\lambda\backslash\lambda^{top}}(a_\lambda(s) q - (l_\lambda(s) + 1)t) \right)^2\cdot\inprod{J_\lambda,J_\lambda} = (-1)^{l(\lambda)}t^{|\lambda|^2 - 2l(\lambda)}\inprod{[I_\lambda], [I_\lambda]}
+\]
+So in order to get the identification $\inprod{J_\lambda,J_\lambda}_{q,t} = \inprod{[I_\lambda], [I_\lambda]}$, we need to modify the combinatoric inner product as:
+\[\inprod{p_\mu,p_\lambda}_{q,t} = \lr{-q/t}^{l(\mu)}\frak{z}(\mu)\delta_{\mu,\lambda}\]and define the modified Jack polynomial as:
+\[
+J_\lambda = \lr{\prod_{s\in\lambda\backslash\lambda^{top}}(a_\lambda(s) q - (l_\lambda(s) + 1)t)}\frak{z}_2(\lambda)t^{|\lambda| + l(\lambda)}P_{\lambda}^{-q/t}
+\] 
+In this case, we have \[\inprod{J_\lambda,J_\lambda}_{q,t} = (-1)^{|\lambda|}t^{|\lambda|^2}\inprod{[I_\lambda], [I_\lambda]}\]. There is no proof so far, but verified for partitions of 2 to 10.
+(I think this should be a well known result in combinatorics.)
+\fi
+%%%%%%%%%%%%
+We have the inner product of Jack polynomials is
+\[\inprod{P_\lambda^{(\alpha)},P_\lambda^{(\alpha)}} = \prod_{s\in\lambda}\frac{\alpha a_\lambda(s) + l_\lambda(s) + \alpha}{\alpha a_\lambda(s) + l_\lambda(s) + 1}\] by combining (4.11) and (10.10) in VI, Macdonald. The definition of inner product here is 
+\[\inprod{p_\lambda,p_\lambda}_\alpha = z_\lambda\alpha^{l(\lambda)}\]
+
+Let \[H'_\lambda = \prod_{s\in\lambda}(\alpha a_\lambda(s) + l_\lambda(s) + 1)\] and make the modification 
+\[
+\begin{aligned}
+J_\lambda &= (-1)^{|\lambda|}t^{|\lambda|}H'_\lambda|_{\alpha = -q/t} P_\lambda^{(-q/t)}\\
+& = \prod_{s\in\lambda} (a_\lambda(s) q - (l_\lambda(s) + 1) t)\cdot P_\lambda^{(-q/t)},
+\end{aligned}
+\] 
+then there is
+\[\inprod{J_\lambda, J_\lambda}_{q,t} = (-1)^{|\lambda|}\inprod{ [I_\lambda] , [I_\lambda] }.\]
+
+We still have the requirement $\int_{S^{[n]}}[I_\mu]\cup 1 = 1$ where $1 = \frac{1}{n!}\frak{a}_{-1}^n\vacuum\in\coH(S^{[n]})$. It is the same as requiring
+\[
+\inprod{J_\lambda,p_1^{n}}_{q,t} = (-1)^{n}n!
+\]where $n = |\lambda|$.
+For $\lambda = (1^n)$, $J_{(1^n)} = (-1)^nn!t^{n}m_{(1^n)}$. Then $\inprod{J_{(1^n)}, p_1^n}_{q,t} = (-1)^nn!q^{n}$.
+For a generic partition $\lambda$, there is way to express $J_\lambda$ as sum of power sum symmetric functions $p_\lambda$ by 
+\[J_\lambda = H_\lambda'm_\lambda + H_\lambda'\sum_{\mu<\lambda} u_{\lambda\mu}m_\mu\]
+where $u_{\lambda\mu}$ is defined in (10.13) of I. Macdonald's book and 
+\[m_\mu = \sum_{\nu\vdash|\mu|} E_{\mu\nu}p_\nu/z_\nu\]with
+\[
+E_{\mu\nu} = (-1)^{l(\mu) - l(\nu)}\sum_{\kappa^{(1)},\kappa^{(2)},\ldots,\kappa^{(l(\nu))}}\prod_{i=1}^{l(\nu)}\frac{\nu_i\cdot(l(\kappa^{(i)})-1)!}{\prod_{j\geqslant 1}m_j(\kappa^{(i)})!}
+\]
+where the sum is over all sequences $\kappa^{(1)},\kappa^{(2)},\ldots,\kappa^{(l(\nu))}$ of partitions such that $\kappa^{(i)}\vdash \nu_i$ and $\kappa^{(1)}\sqcup\kappa^{(2)}\sqcup\ldots\sqcup\kappa^{(l(\nu))} = \mu$.
+The notation $m_i(\lambda)$ represents the size of parts of $\lambda$ which are exactly $i$. From the expression we can conclude that $E_{\mu\nu} = 0$ if $\mu>\nu$. If we set $\nu = (1^n)$, then $E_{\mu\nu} = \delta_{\mu\nu}.$ Thus the coefficients of $J_\lambda$ on $p_1^n$ is $H_\lambda'u_{\lambda,(1^n)}/n!$. By definition, 
+\[u_{\lambda,(1^n)} = \sum_{T}\psi_T^{(-q/t)}\]summed over standard tableaux $T$ with shape $\lambda$. Verified by program, it can be concluded that
+\[H_\lambda'u_{\lambda,(1^n)}/n! = (-1)^nq^n.\]
+In Carlsson's thesis, except the modification above he substitutes $p_k$ by $qp_k$. If we write Jack polynomial into \[J_\lambda = \sum_{\mu\vdash|\lambda|}\pi_{\lambda,\mu}p_\mu,\] the modification he makes is
+\[\tilde{J}_\lambda = \sum_{\mu\vdash|\lambda|}q^{l(\mu)}\pi_{\lambda,\mu}p_\mu.\]
+We can change the inner product accordingly as
+\[\inprod{p_\lambda,p_\lambda} = (-1)^{|\lambda|-l(\lambda)}z_\lambda\lr{\frac{1}{qt}}^{l(\lambda)},\]
+then the combinatoric setting matches with geometric setting by satisfying $\inprod{\tilde{J}_\lambda,\tilde{J}_\lambda} = \inprod{[I_\lambda],[I_\lambda]}$ and $\inprod{\tilde{J}_\lambda,p_1^{|\lambda|}} = (-1)^{|\lambda|}|\lambda|!$.
+\end{subsection}
+\begin{subsection}{Check Carlsson's formula combinatorically}
+\begin{prop}{(E. Carlsson)} The combinatoric formula is
+\[
+\begin{aligned}
+&\inprod{E^m(E^*)^{\theta-m-1}J_\lambda,J_\mu}_\theta = \\
+&(-1)^{|\lambda|}\theta^{-|\lambda|-|\mu|}\prod_{s\in\lambda}(m+a_\lambda(s)+1+\theta l_\mu(s))\prod_{s\in\mu}(m-a_\mu(s)-\theta(l_\lambda(s)+1))
+\end{aligned}
+\]where $E=\exp\left(\sum_n\frac{(-1)^n}{n}p_n\right)$ and $\inprod{p_\lambda,p_\lambda}_\theta = (-1)^{|\lambda|-l(\lambda)}z_\lambda\theta^{-l(\lambda)}$.
+\end{prop}
+By running over $\kappa\subset\lambda\cap\mu$,
+\[
+\begin{aligned}
+\inprod{E^m(E^*)^{\theta-m-1}J_\lambda,J_\mu}_\theta &= \sum_{\kappa\subset\lambda\cap\mu}\frac{1}{\inprod{p_\kappa,p_\kappa}}\inprod{E^mp_\kappa, J_\mu}_\theta\inprod{E^{\theta-m-1}p_\kappa,J_\lambda}_\theta\\
+&= \sum_{\kappa\subset\lambda\cap\mu}\frac{(-1)^{|\kappa|-l(\kappa)}\theta^{l(\kappa)}}{z_\kappa}\inprod{E^mp_\kappa, J_\mu}_\theta\inprod{E^{\theta-m-1}p_\kappa,J_\lambda}_\theta\\
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\inprod{E^mp_\kappa, J_\mu} &= \sum_{\nu}\frac{(-1)^{|\nu|}m^{l(\nu)}}{z_\nu}\inprod{p_{\nu\sqcup\kappa},J_\mu}_\theta\\
+&= \sum_{\nu\vdash|\mu|-|\kappa|}\frac{(-1)^{|\mu|-|\kappa|}m^{l(\nu)}}{z_\nu}\inprod{p_{\nu\sqcup\kappa},J_\mu}_\theta\\
+&= \sum_{\nu\vdash|\mu|-|\kappa|}\frac{(-1)^{|\mu|-|\kappa|}m^{l(\nu)}}{z_\nu}\inprod{p_{\nu\sqcup\kappa},p_{\nu\sqcup\kappa}}_\theta\cdot J_\mu|_{p_{\nu\sqcup\kappa}}
+\end{aligned}
+\]
+we can check for $\lambda = \mu = (2)$. It reveals that the above proposition is not exactly true, the combinatoric version need to be revised.
+%%%%%%%%%%%%%%%%%
+\iffalse
+By expanding the left hand side, 
+\[
+\begin{aligned}
+&\exp\lr{\frac{m}{qt}\sum_n(-1)^{n+1} \frac{\p}{\p p_n}}J_\mu 
+= \sum_{\nu} (-1)^{|\nu| - l(\nu)} \frac{1}{\nu_{mult}!}\frac{\p J_\mu}{\p p_{\nu}}\lr{\frac{m}{qt}}^{l(\nu)}\\
+&\exp\lr{\frac{m+q+t}{qt}\sum_n \frac{\p}{\p p_n}}J_\lambda
+= \sum_{\kappa} \frac{1}{\kappa_{mult}!}\frac{\p J_\lambda}{\p p_{\kappa}}\lr{\frac{m + q + t}{qt}}^{l(\kappa)}\\
+&\left<\exp\left(\frac{m}{qt}\sum_n(-1)^{n+1}\frac{\partial}{\partial p_n}\right)J_\mu,\exp\left(\frac{m+q+t}{qt}\sum_n(-1)^{n+1}\frac{\partial}{\partial p_n}\right)J_\lambda\right>_{q,t}\\
+= &\sum_{\nu, \kappa}(-1)^{|\nu| - l(\nu)}\frac{1}{\nu_{mult}!\kappa_{mult}!}\inprod{\frac{\p J_\mu}{\p p_{\nu}}, \frac{\p J_\lambda}{\p p_{\kappa}}}_{q,t} \lr{\frac{m}{qt}}^{l(\nu)}\lr{\frac{m + q + t}{qt}}^{l(\kappa)}\\
+\end{aligned}
+\]\fi
+%%%%%%%%%%%%%%%%%
+\end{subsection}
+%%%%%%%%
+\iffalse
+Young tableaux of shape $(4,2)$ with weight $(1,1,1,1,1,1)$:
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+1 & 2 & 3 & 4\\
+5 & 6 \\
+\end{ytableau}
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+1 & 2 & 3 & 5\\
+4 & 6 \\
+\end{ytableau}
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+1 & 2 & 4 & 5\\
+3 & 6 \\
+\end{ytableau}
+\ytableausetup{nosmalltableaux}
+\begin{ytableau}
+1 & 2 & 4 & 6\\
+3 & 5 \\
+\end{ytableau}
+\begin{ytableau}
+1 & 2 & 3 & 6\\
+4 & 5 \\
+\end{ytableau}
+\begin{ytableau}
+1 & 2 & 5 & 6\\
+3 & 4 \\
+\end{ytableau}
+\begin{ytableau}
+1 & 3 & 5 & 6\\
+2 & 4 \\
+\end{ytableau}
+\fi
+%%%%%%%%
+\iffalse
+\[
+\begin{aligned}
+&Cov(3X-2Y+1,X+4Y-3)\\
+=& E([3X-2Y+1-E(3X-2Y+1)][X+4Y-3-E(X+4Y-3)]) \\
+=& E([3(X-EX) - 2(Y-EY)][X-EX+4(Y-EY)])\\
+=& 3E((X-EX)(X-EX)) + 10 E((X-EX)(Y-EY)) - 8 E((Y-EY)(Y-EY))\\
+=& 3D(X) + 10 Cov(X,Y) - 8 D(Y)\\
+\end{aligned}
+\]
+\[
+\begin{aligned}
+&Cov(3X-2Y+1,X+4Y-3)\\
+=& 3Cov(X, X+4Y-3) - 2 Cov(Y, X+4Y-3) + Cov(1, X+4Y-3)\\
+=& 3(Cov(X,X) + 4Cov(X,Y)) - 2(Cov(Y,X) + 4 Cov(Y,Y))\\
+=& 3Cov(X,X) + 10 Cov(X,Y) -8 Cov(Y,Y)\\
+=& 3D(X) + 10 Cov(X,Y) - 8 D(Y)
+\end{aligned}
+\]
+\fi
+%%%%%%%%
+\iffalse
+The point is how to express $\frak{a}_{\lambda,S}(c)$ as operators on Hilbert schemes of $T_sS$ for fixed points $s$ on $S$. A clue is to make use of Carlsson's theorem:
+\[W(\mathcal{L}) = \exp\lr{\sum_{n>0}\frac{(-1)^{n-1}z^n}{n}\frak{a}_{-n}(\mathcal{L})}\exp\lr{-\sum_{n>0}\frac{z^n}{n}\frak{a}_{n}(\mathcal{K-L})}\]
+\fi
+
+\iffalse
+Plethysm has the property such that for all $g\in \Lambda$ there is 
+\[p_n[g]=g[p_n]=g(x_1^n,x_2^n,\ldots)\]
+\fi
+
+\iffalse
+\[
+\begin{aligned}
+\sum_{d=0}^{+\infty}\sum_{k=d}^{+\infty}\frac{(-1)^da_{k,d}}{d!(d-1)!(k-d)!}x^{k-d}&=\frac{1}{1-x^2}+\frac{1}{(1+x)(1-x^2)}+\sum_{d=2}^{+\infty}\frac{2}{(1-x)^{d-3}(1-x^2)^3}\\
+&=\frac{1}{1-x^2}+\frac{1}{(1+x)(1-x^2)}+\frac{2}{(1-x)^{-1}(1-x^2)^3}\frac{1}{1-\frac{1}{1-x}}\\
+&=\frac{x^3+x^2+2x-2}{x(1-x)(1+x)^3}
+\end{aligned}
+\]
+\fi
+%%%%%%%%%
+\end{document}
