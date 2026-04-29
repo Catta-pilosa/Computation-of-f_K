@@ -3,13 +3,17 @@
 \usepackage{amssymb,amsmath,amsthm,amscd}
 \usepackage{braket}
 \usepackage{ytableau, xcolor}
+\usepackage{hyperref}
 \usepackage{multicol}
+\usepackage{enumitem}
+
 
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{prop}{Proposition}[theorem]
 \newtheorem{lemma}{Lemma}[theorem]
 \newtheorem{example}{Example}[theorem]
+\newtheorem{conj}{Conjecture}[theorem]
 %\DeclareMathOperator{\coH}{H}
 \renewcommand{\frak}[1]{\mathfrak{#1}}
 \newcommand{\cc}[1]{\mathcal{#1}}
@@ -22,6 +26,8 @@
 \DeclareMathOperator{\Hilb}{Hilb}
 \DeclareMathOperator{\id}{id}
 \DeclareMathOperator{\coH}{H^*}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Coeff}{Coeff}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\vacuum}{\ket{}}
@@ -36,7 +42,7 @@
 \begin{document}
 
 \maketitle
-
+\tableofcontents
 \section{Conclusion of computation by program}
 \iffalse
 \begin{lemma}
@@ -182,7 +188,7 @@ f_K(-|\lambda| -1,i_0,i_1,\ldots,i_l) &= \sum_{d=0}^{l+1} a_{l,d}m_{(1^d)}(i_0,\
 \]
 
 \begin{prop}
-then by induction formula above there is 
+There is 
 \[\begin{aligned}
 f_K(-|\lambda|, -1,i_0,i_1,\ldots,i_l) = &(-1)^l(l+2)!m_{(1^2)}+ (-1)^l(l+2)! - \sum_{d=0}^{l+1}((l-d+1)a_{l,d+1}-(l+d+2)a_{l,d})m_{(1^d)}\\
 &-\sum_{d=2}^{l+1}c_{l-1,d-1}d(d-1)m_{(1^d)}.
@@ -229,7 +235,7 @@ B+C =& \sum_{d=0}^l (d-1)c_{l-1,d}  (d+1)m_{(1^{d+1})} + \sum_{d=1}^{l+1}c_{l-1,
 \begin{prop}
 The coefficients $c_{l,d}$ fills in the following generating functions:
 \[\begin{aligned}
-\sum_{l=0}^{+\infty}\frac{c_{l,0}}{(l+1)!}x^l &= \frac{3+x}{(1-x^2)^2}\\
+\sum_{l=0}^{+\infty}\frac{c_{l,0}}{(l+1)!}x^l &= \frac{3-x}{(1-x^2)^2}\\
 \sum_{l=0}^{+\infty}\frac{c_{l,1}}{l!}x^l &= -\frac{3}{(1-x^2)^2}\\
 \sum_{l=1}^{+\infty}\frac{c_{l,2}}{4(l-1)!}x^{l-1} &= \frac{11x+5}{(1-x)^3(1+x)^4}\\
 \frac{(-1)^d}{2d!(d-1)!}\sum_{l=d-1}^{+\infty}\frac{c_{l,d}}{(l+1-d)!}x^{l+1-d} &= \frac{(d^2+2d+3)x+(d^2+2d-3)}{(1-x)^{d+1}(1+x)^4},\text{     }d\geqslant2\\
@@ -659,6 +665,22 @@ By running over $\kappa\subset\lambda\cap\mu$,
 \end{aligned}
 \]
 we can check for $\lambda = \mu = (2)$. It reveals that the above proposition is not exactly true, the combinatoric version need to be revised.
+\[J_{(2)} = -q^2tp_2 + q^2t^2p_1^2.\]Let $\theta = qt$, then 
+\[\begin{aligned}
+&\inprod{E^m(E^*)^{\theta-m-1}J_\lambda,J_\mu}_\theta\\
+=&m(m+q)(qt - m) (qt - m + q) + qt(-2m) \cdot(-2) (qt - m) - \frac12 qt \cdot2q\cdot 2q\\
+=& m^2q^2t^2 + mq^3t^2 - 2m^3qt - m^2q^2t + mq^3t + 4mq^2t^2 + m^4 - m^2q^2 - 4m^2qt - 2q^3t,
+\end{aligned}\]
+while the expected result is 
+\[\begin{aligned}
+&t^{-4}  q^{-4}  (m + 1)  (m + 2)  (qt - m)  (qt - m + 1)\\
+=& \frac{1}{q^4t^4}(m^2q^2t^2 - 2m^3qt + 3mq^2t^2 + m^4 - 5m^2qt + 2q^2t^2 + 2m^3 - mqt - m^2 + 2qt - 2m)
+\end{aligned}\]
+Another point is for $\lambda = (1^k)$ and $\mu = (l)$ we have
+\[\inprod{E^m,J_\lambda}_\theta = \prod_{i=0}^{k-1}(m+iq)\text{,         } \inprod{E^mp_1,J_\lambda}_\theta = -k\prod_{i=0}^{k-2}(m+it)\]
+and
+\[\inprod{E^m,J_\mu}_\theta = \prod_{i=0}^{l-1}(m+iq)\text{,         } \inprod{E^mp_1,J_\mu}_\theta = -l\prod_{i=0}^{l-2}(m+iq),\]
+which are not exactly same with section 3.9 in 'Exts and Vertex Operators'.
 %%%%%%%%%%%%%%%%%
 \iffalse
 By expanding the left hand side, 
@@ -711,26 +733,7 @@ Young tableaux of shape $(4,2)$ with weight $(1,1,1,1,1,1)$:
 \end{ytableau}
 \fi
 %%%%%%%%
-\iffalse
-\[
-\begin{aligned}
-&Cov(3X-2Y+1,X+4Y-3)\\
-=& E([3X-2Y+1-E(3X-2Y+1)][X+4Y-3-E(X+4Y-3)]) \\
-=& E([3(X-EX) - 2(Y-EY)][X-EX+4(Y-EY)])\\
-=& 3E((X-EX)(X-EX)) + 10 E((X-EX)(Y-EY)) - 8 E((Y-EY)(Y-EY))\\
-=& 3D(X) + 10 Cov(X,Y) - 8 D(Y)\\
-\end{aligned}
-\]
-\[
-\begin{aligned}
-&Cov(3X-2Y+1,X+4Y-3)\\
-=& 3Cov(X, X+4Y-3) - 2 Cov(Y, X+4Y-3) + Cov(1, X+4Y-3)\\
-=& 3(Cov(X,X) + 4Cov(X,Y)) - 2(Cov(Y,X) + 4 Cov(Y,Y))\\
-=& 3Cov(X,X) + 10 Cov(X,Y) -8 Cov(Y,Y)\\
-=& 3D(X) + 10 Cov(X,Y) - 8 D(Y)
-\end{aligned}
-\]
-\fi
+
 %%%%%%%%
 \iffalse
 The point is how to express $\frak{a}_{\lambda,S}(c)$ as operators on Hilbert schemes of $T_sS$ for fixed points $s$ on $S$. A clue is to make use of Carlsson's theorem:
@@ -752,4 +755,755 @@ Plethysm has the property such that for all $g\in \Lambda$ there is
 \]
 \fi
 %%%%%%%%%
+\section{Compute Chern character operator}
+We need to use the following results:
+\begin{lemma}
+%(i) Let $n\geqslant 1$, $\alpha\in H^*(X)$, and $\mathfrak{f}\in\End(\bb{H}_X)$ with $\frak{f}' = 0$. Then,
+%\[[\mathfrak{f}, \frak{a}_{-(n+1)}(\alpha)] = -\frac{1}{n}\]
+For $i=1,2$, let $\frak{f}_i\in\End(\bb{H}_X)$ such that $\frak{f}_i\cdot|0\rangle = 0$ and $\frak{f}_i' = 0$. If $[\frak{f}_1,\frak{a}_{-1}(\alpha)] = [\frak{f}_2,\frak{a}_{-1}(\alpha)]$ for every $\alpha\in H^*(X)$, then $\frak{f}_1= \frak{f}_2$. 
+\end{lemma}
+We have 
+\[
+[\frak{G}_k(\alpha), \frak{a}_{-1}(\beta)] = \frac{1}{k!}\cdot\frak{a}_{-1}^{(k)}(\alpha\beta)
+\]
+Let \[\frak{f} = -\sum_{l(\lambda) = k+2,|\lambda|=0}\frac{1}{\lambda!}\frak{a}_\lambda(\alpha) + \sum_{l(\lambda) = k,|\lambda|=0}\frac{s(\lambda)-2}{24\lambda!}\frak{a}_\lambda(e\alpha) + \sum_{l(\lambda) = k+1,|\lambda|=0}\frac{g_K(\lambda)}{\lambda!}\frak{a}_\lambda(\alpha) + \sum_{l(\lambda) = k,|\lambda|=0}\frac{g_{K^2}(\lambda)}{\lambda!}\frak{a}_\lambda(e\alpha)\]
+then
+\[
+\begin{aligned}
+\frak{f}' = &-\sum_{l(\lambda) = k+2,|\lambda|=0}\frac{1}{\lambda!}\frak{a}'_\lambda(\alpha) + \sum_{l(\lambda) = k,|\lambda|=0}\frac{s(\lambda)-2}{24\lambda!}\frak{a}'_\lambda(e\alpha)\\ 
+&+ \sum_{l(\lambda) = k+1,|\lambda|=0}\frac{g_K(\lambda)}{\lambda!}\frak{a}'_\lambda(K\alpha) + \sum_{l(\lambda) = k,|\lambda|=0}\frac{g_{K^2}(\lambda)}{\lambda!}\frak{a}'_\lambda(K^2\alpha)\\
+=& \sum_{l(\lambda) = k+3,|\lambda|=0}\sum_{i,j}\frac{i+j}{2\lambda_{i,j}!}\frak{a}_\lambda(\alpha) + \sum_{l(\lambda) = k+2, |\lambda|=0}\sum_{i=0}^{\infty}\frac{(m_i-m_{-i})i^2}{2\lambda!}\frak{a}_\lambda(K\alpha)\\
+& -\sum_{l(\lambda)= k+1,|\lambda| = 0}\sum_{i,j}\frac{(s(\lambda_{i,j})-2)(i+j)}{48\lambda_{i,j}!}\frak{a}_\lambda(e\alpha)\\
+& - \sum_{l(\lambda)= k+2,|\lambda| = 0}\sum_{i,j}\frac{g_K(\lambda_{i,j})(i+j)}{2\lambda_{i,j}!}\frak{a}_\lambda(K\alpha) - \sum_{l(\lambda)= k+1,|\lambda| = 0}\sum_{i=0}^{\infty}\frac{(m_i-m_{-i})i^2}{2\lambda!}g_K(\lambda)\frak{a}_\lambda(K^2\alpha)\\
+& -\sum_{l(\lambda)= k+1,|\lambda| = 0}\sum_{i,j}\frac{g_{K^2}(\lambda_{i,j})(i+j)}{2\lambda_{i,j}!}\frak{a}_\lambda(K^2\alpha)\\
+=& \sum_{l(\lambda) = k+2, |\lambda|=0}\sum_{i=0}^{\infty}\frac{(m_i-m_{-i})i^2}{2\lambda!}\frak{a}_\lambda(K\alpha) - \sum_{l(\lambda)= k+2,|\lambda| = 0}\sum_{i,j}\frac{g_K(\lambda_{i,j})(i+j)}{2\lambda_{i,j}!}\frak{a}_\lambda(K\alpha)\\
+&- \sum_{l(\lambda)= k+1,|\lambda| = 0}\sum_{i=0}^{\infty}\frac{(m_i-m_{-i})i^2}{2\lambda!}g_K(\lambda)\frak{a}_\lambda(K^2\alpha) -\sum_{l(\lambda)= k+1,|\lambda| = 0}\sum_{i,j}\frac{g_{K^2}(\lambda_{i,j})(i+j)}{2\lambda_{i,j}!}\frak{a}_\lambda(K^2\alpha)\\
+\end{aligned}
+\]
+By the requirement $\frak{f}'= 0$, we can conclude that 
+\[
+\begin{aligned}
+\sum_{i=0}^{\infty}\frac{(m_i-m_{-i})i^2}{2\lambda!} - \sum_{i,j}\frac{g_K(\lambda_{i,j})(i+j)}{2\lambda_{i,j}!} & = 0\\
+- \sum_{i=0}^{\infty}\frac{(m_i-m_{-i})i^2}{2\lambda!}g_K(\lambda) - \sum_{i,j}\frac{g_{K^2}(\lambda_{i,j})(i+j)}{2\lambda_{i,j}!} &= 0\\
+\end{aligned}
+\]
+which is equivalent with 
+\[
+\begin{aligned}
+\frac{1}{2}\sum_{i=0}^{\infty} (m_i-m_{-i})i^2- \sum_{i<j} g_K(\lambda_{i,j})m_im_j(i+j) - \sum_{i}g_K(\lambda_{i,j})m_i(m_i-1)i&=0\\
+\frac{1}{2}\sum_{i=0}^{\infty} (m_i-m_{-i})i^2g_K(\lambda)- \sum_{i<j} g_{K^2}(\lambda_{i,j})m_im_j(i+j) - \sum_{i}g_{K^2}(\lambda_{i,j})m_i(m_i-1)i&=0\\
+\end{aligned}
+\]
+
+%%%%%%%%%
+\section{Differential operators $D_n^d$}
+The differential operators $D_n^d:\Lambda_n\to\Lambda_n$ act on Jack polynomials as follows:
+\[
+\begin{aligned}
+D_n^dP_\lambda^\alpha &= \sum_{|I|=d,I\subset[1,n]}\prod_{i\in I} (\alpha\lambda_i + n -i)\\
+&= \sum_{|I|=d,I\subset[1,n]}\lr{\alpha^d\prod_{i\in I}\lambda_i+\cdots+\alpha^{d-l}\lr{\sum_{|J|=d-l,J\subset I}\prod_{j\in J}\lambda_j\cdot\prod_{k\in I\backslash J}(n-k)}+\cdots+\prod_{k\in I}(n-k)}P_\lambda^\alpha
+\end{aligned}
+\]
+\subsection{First kind relation}
+\begin{example}
+\[
+\begin{aligned}
+&D_n^4P_\lambda^\alpha\\
+=& \alpha^4 \sum\lambda_{i_1}\lambda_{i_2}\lambda_{i_3}\lambda_{i_4} + \alpha^3 \left(-\frac12p_2\sum i\lambda_i - \sum i\lambda_i^3\right) + \alpha^2 \left(\frac12\left(\sum_i\lambda_i\right)^2 - \frac32 \sum i^2\lambda_i^2\right) + \alpha \sum i^3\lambda_i + \cdots\\
+\\
+&\sum_{s\in\lambda}c(s)^3\\
+=& \sum_{i=1}^n \lr{(i-1)^3\lambda_i - \frac32 (i-1)^2\lambda_i(\lambda_i-1)\alpha + \frac12(i-1)\lambda_i(\lambda_i-1)(2\lambda_i-1)\alpha^2 - \frac14\lambda_i^2(\lambda_i-1)^2\alpha^3}\\
+\end{aligned}
+\]
+\end{example}
+
+\begin{example}
+\[
+\begin{aligned}
+&D_n^3P_\lambda^\alpha\\
+=& \alpha^3\lr{\frac13 p_3 -\frac12 p_2p_1 + \frac16 p_1^3} + \alpha^2\lr{\frac14 n(n-5)(p_1^2 - p_2) + p_1 \sum_{i_1}^n i\lambda_i - \sum_{i=1}^ni\lambda_i^2}\\
+& + \alpha\lr{\lr{\frac18 n^4 - \frac{11}{12}n^3 + \frac{15}{8}n^2 - \frac{1}{12}n}p_1 + \frac12n(n-5)\sum i\lambda_i + \sum i^2\lambda_i}\\
+& + \frac{1}{48}(n-3)(n-2)(n-1)^2n^2\\
+\\
+&\sum_{s\in\lambda}c(s)^2= \lr{\sum_{i=1}^ni^2\lambda_i - 2\sum_{i=1}^n i\lambda_i + p_1} +\alpha\lr{-\sum_{i=1}^n i\lambda_i^2 + p_2 - p_1} + \alpha^2\lr{\frac13p_3 - \frac12p_2 + \frac16p_1}
+\end{aligned}
+\]
+\end{example}
+
+\begin{example}
+\[
+\begin{aligned}
+&D_n^2P_\lambda^\alpha=\frac12\alpha^2p_1^2 + \frac18 n^2(n-1)^2 + \frac12 \alpha n(n-1)p_1 - n(\lambda')\alpha^2 + \frac12 \alpha^2p_1 - (n-1)\alpha p_1 + n(\lambda)\alpha\\
+&\sum_{s\in\lambda} c(s)=n(\lambda')\alpha - n(\lambda)
+\end{aligned}
+\]
+\end{example}
+
+The coefficient before $\alpha^{d-l}$ is 
+\[
+\begin{aligned}
+\triangle_l=&\sum_{|I|=d,I\subset[1,n]}\sum_{|J|=d-l,J\subset I}\prod_{j\in J}\lambda_j\cdot\prod_{k\in I\backslash J}(n-k)\\
+=&\lr{\sum_{|J'|=l,J'\subset[1,n]}\prod_{k\in J'}(n-k)}\cdot \lr{\sum_{|J|=d-l,J\subset[1,n]}\prod_{j\in J}\lambda_j}\\
+& - \sum_{|J| = d-l; |J'| = l; J,J'\subset[1,n];J\cap J'\neq\varnothing}\lr{\prod_{j\in J}\lambda_j\prod_{k\in J'}(n-k)}.\\
+\end{aligned}
+\]
+In the case $l>d-l$, the second term equals
+\[
+\begin{aligned}
+&\sum_{|J| = d-l; J\subset[1,n]}\sum_{|J'| = l; J'\subset[1,n]; J\cap J'\neq\varnothing}\lr{\prod_{j\in J}\lambda_j\prod_{k\in J'}(n-k)}\\
+=&\sum_{|J|=d-l, J\subset[1,n]}\lr{\prod_{j\in J}\lambda_j \cdot \lr{\sum_{|J'|=l,|J\cap J'|=1} + \cdots + \sum_{|J'|=l,|J\cap J'|=m} + \cdots + \sum_{|J'|=l,|J\cap J'|=d-l}}\prod_{k\in J'}(n-k)}\\
+\end{aligned}
+\]
+The term 
+\[
+\begin{aligned}
+&\sum_{|J'| = l;|J\cap J'|=m; J'\subset[1,n]}\prod_{k\in J'}(n-k)\\
+=&\prod_{j_1,\ldots,j_m\in J}(n-j_1)(n-j_2)\cdots(n-j_m)\cdot\prod_{k_1,\ldots,k_{l-m}\notin J}(n-k_1)\cdots(n-k_{l-m})\\
+=&\lr{\binom{|J|}{m}n^m - \binom{|J|-1}{m-1}n^{m-1}e_1(J) + \binom{|J|-2}{m-2}n^{m-2}e_2(J) + \cdots + (-1)^me_m(J)}\\
+\cdot&\lr{\binom{n-|J|}{l-m}n^{l-m} + \cdots + (-1)^r\binom{n-|J|-r}{l-m-r}n^{l-m-r}e_r([1,n]\backslash J) +\cdots+ (-1)^{l-m}e_{l-m}([1,n]\backslash J)}.
+\end{aligned}
+\]
+Then let
+\[
+\begin{aligned}
+\star_m &= \sum_{J\subset[1,n];|J| = d-l}\lr{\prod_{j\in J}\lambda_j\cdot\sum_{|J'| = l;|J\cap J'|=m}\prod_{k\in J'}(n-k)}\\
+&= \sum_{J\subset[1,n];|J|=d-l}\sum_{t=0}^l\sum_{r,s;r+s=t}(-1)^t\binom{|J|-r}{m-r}\binom{n-|J|-s}{l-m-s}e_r(J)e_s([1,n]\backslash J)n^{l-t}\prod_{j\in J}\lambda_j
+\end{aligned}
+\]
+By now the coefficient before $\alpha^{d-l}$ is 
+\[
+\begin{aligned}
+&\lr{\sum_{|J'|=l,J'\subset[1,n]}\prod_{k\in J'}(n-k)}\cdot \lr{\sum_{|J|=d-l,J\subset[1,n]}\prod_{j\in J}\lambda_j} - \sum_{|J| = d-l; |J'| = l; J,J'\subset[1,n];J\cap J'\neq\varnothing}\lr{\prod_{j\in J}\lambda_j\prod_{k\in J'}(n-k)}\\
+=&\lr{\sum_{|J'|=l,J'\subset[1,n]}\prod_{k\in J'}(n-k)}\cdot \lr{\sum_{|J|=d-l,J\subset[1,n]}\prod_{j\in J}\lambda_j} - (\star_1 + \cdots + \star_{d-l})
+\end{aligned}
+\]
+We do not need terms contain $n$, thus we can only consider $t=l$ part:
+\[
+\star_m|_{t=l} = \sum_{J\subset[1,n];|J|=d-l}\sum_{r=0}^l(-1)^l\binom{d-l-r}{m-r}\binom{n-d+r}{r-m}e_r(J)e_{l-r}([1,n]\backslash J)\prod_{j\in J}\lambda_j,
+\]
+note that $m-r\geqslant 0$ and $r-m\geqslant 0$, so $r = m$, then
+\[
+\star_m|_{t=l} = \sum_{J\subset[1,n];|J|=d-l}(-1)^le_m(J)e_{l-m}([1,n]\backslash J)\prod_{j\in J}\lambda_j.
+\]
+By the formula $e_m(J)e_{l-m}([1,n]\backslash J) = e_m([1,n])$ \color{red}(This formula is wrong, correct formula should be $e_l([1,n]) = \sum_{m=0}^le_m(J)e_{l-m}([1,n]\backslash J)$),
+\[
+\begin{aligned}
+\star_m|_{t=l} &= (-1)^le_m([1,n])\sum_{J\subset[1,n];|J|=d-l}\prod_{j\in J}\lambda_j\\
+&= (-1)^le_m([1,n])e_{d-l}(\lambda).
+\end{aligned}
+\]
+\color{black}The number $e_m([1,n])$ is the first kind Stirling number \[\left[ {n+1 \atop n+1-m} \right].\]
+It has the formula:
+\[
+\begin{aligned}
+\left[ {n \atop n-k} \right] = &\binom{n-1}{n-k-1}\binom{n+k}{n}\cdot 0 + \binom{n}{n-k-1}\binom{n+k}{n+1}\sum_{m=0}^1\frac{(-1)^{m+k}m^{k+1}}{m!(1-m)!}\\
+&+ \cdots + \binom{n+i-1}{n-k-1}\binom{n+k}{n+i}\sum_{m=0}^i\frac{(-1)^{m+k}m^{k+i}}{m!(i-m)!}\\
+&+ \cdots + \binom{n+k-1}{n-k-1}\binom{n+k}{n+k}\sum_{m=0}^k\frac{(-1)^{m+k}m^{2k}}{m!(k-m)!}.
+\end{aligned}
+\]
+What we need is the constant term of $\left[ {n \atop n-k} \right]\in\bb{Q}[n]$ as a polynomial in $n$.
+\[const.\binom{n+i-1}{n-k-1}\binom{n+k}{n+i} = \frac{(-1)^k\binom{2k}{k+i}}{i\binom{2k}{k}}\]
+In conclusion, we have the coefficient before $\alpha^{d-l}$ is 
+\[
+\begin{aligned}
+\triangle_l &= e_l([0,n-1])e_{d-l}(\lambda) - (\star_1+\cdots+\star_{d-l})\\
+&= e_l([0,n-1])e_{d-l}(\lambda) - \sum_{m=0}^{d-l}\sum_{J\subset[1,n];|J|=d-l}(-1)^le_m(J)e_{l-m}([1,n]\backslash J)\prod_{j\in J}\lambda_j\\
+&= e_l([0,n-1])e_{d-l}(\lambda) - \sum_{J\subset[1,n];|J|=d-l}\lr{\sum_{m=0}^{d-l}(-1)^le_m(J)e_{l-m}([1,n]\backslash J)}\prod_{j\in J}\lambda_j\\
+\end{aligned}
+\]
+At the same time, Chern character operator $f_{0,d-1}$ acts on $[I_\lambda]$ as 
+\[
+f_{0,d-1}([I_\lambda]) = q^{d-1}\sum_{s\in\lambda}c(s)^{d-1}[I_\lambda]
+\]
+Consider the expression
+\[
+\begin{aligned}
+\sum_{s\in\lambda}c(s)^{d-1} &= \sum_{i=1}^n\sum_{j=1}^{\lambda_i}(i-1-(j-1)\alpha)^{d-1}\\
+&= \sum_{i=1}^{n}\sum_{j=0}^{\lambda_i-1}\sum_{t=0}^{d-1}(-1)^t\binom{d-1}{t}(i-1)^{d-1-t}j^t\alpha^t\\
+&= \sum_{i=1}^{n}\sum_{t=0}^{d-1}(-1)^t\binom{d-1}{t}(i-1)^{d-1-t}\lr{\sum_{j=0}^{\lambda_i-1}j^t}\alpha^t.\\
+\end{aligned}
+\]
+Faulhaber's formula states that 
+\[\sum_{k=1}^n k^p = \frac{1}{p+1}\sum_{r=0}^p\binom{p+1}{r}B_rn^{p-r+1},\]
+where $B_r$ is the Bernoulli number with convention $B_1=+\frac12.$
+
+Then 
+\[
+\begin{aligned}
+\sum_{s\in\lambda}c(s)^{d-1} &= \sum_{i=1}^{n}\sum_{t=0}^{d-1}(-1)^t\binom{d-1}{t}(i-1)^{d-1-t}\lr{\sum_{j=0}^{\lambda_i-1}j^t}\alpha^t.\\
+&= \sum_{i=1}^{n}\sum_{t=0}^{d-1}(-1)^t\binom{d-1}{t}(i-1)^{d-1-t}\lr{-\lambda_i^t + \frac{1}{t+1}\sum_{s=0}^t\binom{t+1}{s}B_s\lambda_i^{t-s+1}}\alpha^t
+\end{aligned}
+\]
+we only need to consider the highest $(i,\lambda)-$degree in coefficient of each $\alpha^t$, which is 
+\[\frac{(-1)^t}{t+1}\binom{d-1}{t}\sum_{i=1}^{n}i^{d-1-t}\lambda_i^{t+1}\] 
+\subsection{Second kind relation}
+Chern character operators $\mathbf{f}_{0,l}$ act on fixed points as following:
+\[
+\mathbf{f}_{0,l}[I_\lambda]=q^{l}\sum_{s\in\lambda}(x(s)-\alpha y(s))^l[I_\lambda],
+\]
+where $\alpha = -t/q$.
+
+Consider the sum
+\[
+\begin{aligned}
+\mathbf{F}(z) &= \sum_{l=0}^\infty \frac{1}{l!}(zq^{-1})^l\mathbf{f}_{0,l},\\
+\end{aligned}
+\]
+then there is 
+\[
+\begin{aligned}
+\mathbf{F}(z)[I_\lambda] &= \sum_{s\in\lambda}\sum_{l=0}^\infty \frac{1}{l!}z^{l}(x(s)-\alpha y(s))^l[I_\lambda]\\
+&= \sum_{s\in\lambda}e^{zx(s)}\cdot e^{-z\alpha y(s)} [I_\lambda]\\
+&= \sum_{i=1}^{l(\lambda)} \sum_{j=1}^{\lambda_i}e^{z(i-1)}\cdot e^{-z\alpha (j-1)} [I_\lambda]\\
+&= \sum_{i=1}^{l(\lambda)} e^{z(i-1)}\cdot\frac{1-e^{-z\alpha\lambda_i}}{1-e^{-\alpha z}} [I_\lambda]\\
+&= \frac{1}{e^{-\alpha z}-1}\left(\sum_{i=1}^{l(\lambda)} e^{z(-\alpha\lambda_i+i-1)} - \frac{e^{zl(\lambda)}-1}{e^z-1}\right)[I_\lambda]\\
+\end{aligned}
+\]
+The differential operators $D_n^l(\alpha)$ act on Jack polynomials as \[D_n^l(\alpha)P_\lambda^\alpha = e_l(\alpha\lambda_i+n-i; i=1,\ldots,n)P_\lambda^\alpha\\\]
+We can modify $D_n^l(\alpha)$ into some operators $\Delta_n^r(\alpha)$ such that $\Delta_n^r(\alpha) P_\lambda^\alpha = p_r(\alpha\lambda_i - (i-1))P_\lambda^\alpha$.
+In this case, 
+\[\rho_n\circ\Delta_n^r(\alpha) = \Delta_{n-1}^r(\alpha)\circ\rho_n,\]
+thus we can define $\Delta_\infty^r = \lim\Delta_n^r$. Consider the sum
+\[\mathbf{D}(z) = \sum_{r=0}^\infty \frac{z^r}{r!}\Delta_\infty^r(\alpha).\]
+The action on Jack polynomials is:
+\[
+\begin{aligned}
+\mathbf{D}(z)P_\lambda^\alpha = \sum_{i=1}^{l(\lambda)}e^{z(\alpha\lambda_i-i+1)}\cdot P_\lambda^\alpha
+\end{aligned}
+\]
+Therefore, we may have the identification
+\[(e^{\alpha z}-1)\mathbf{F}(-z)+\frac{e^{zl(\lambda)-1}}{e^z-1}\mapsto \mathbf{D}(z)\]
+\begin{theorem}[Pieri's formula]
+Let $\mu\subset\lambda$, and let $\lambda/\mu$ be the horizontal $n-$strip. Then 
+\[\inprod{J_\mu J_{(n)}, J_\lambda} = \lr{\prod_{s\in\mu}A_{\lambda\mu}(a)}\lr{\prod_{s\in(n)}h_n^*(s)}\lr{\prod_{s\in\lambda}B_{\lambda\mu}(s)}\]
+where
+\[
+\begin{aligned}
+A_{\lambda\mu}(s) &= 
+\begin{cases}
+h^{\mu}_*(s) & \text{if } \lambda/\mu \text{ does not contain a square in the same column as } s, \\
+h^*_\mu(s) & \text{otherwise}.\\
+\end{cases}\\
+B_{\lambda\mu}(s) &= 
+\begin{cases}
+h^*_\lambda(s) & \text{if } \lambda/\mu \text{ does not contain a square in the same column as } s, \\
+h^\lambda_*(s) & \text{otherwise}.\\
+\end{cases}
+\end{aligned}
+\]
+Note that 
+\[
+\begin{aligned}
+&\prod_{s\in(n)}h_n^*(s) = n!\alpha^n\\
+&h^*_\lambda(x) = l_\lambda(x) + \alpha(a_\lambda(x) + 1)\\
+&h_*^\lambda(x) = l_\lambda(x) + 1 + \alpha a_\lambda(x). \\
+\end{aligned}
+\]
+\end{theorem}
+Set $n=1$ in the above theorem, we can get for $|\lambda| = |\mu| + 1, \mu\subset\lambda$
+\[
+\begin{aligned}
+\inprod{p_1J_\mu, J_\lambda} = 
+&\alpha\prod_{s\in\mu-C_{\lambda/\mu}}(l_\mu(s) + 1 + \alpha a_{\mu}(s))\prod_{s\in\lambda-C_{\lambda/\mu}-\lambda/\mu}(l_\lambda(s) + \alpha(a_{\lambda}(s) + 1))\\
+&\cdot \prod_{s\in C_{\lambda/\mu}}(l_\mu(s) + \alpha (a_{\mu}(s) + 1)) \prod_{s\in C_{\lambda/\mu}}(l_\lambda(s) + 1 + \alpha a_{\lambda}(s)) \\
+\end{aligned}
+\]
+thus
+\[
+p_1J_\mu = \sum_{\mu\subset\lambda, |\lambda| = |\mu| + 1}\alpha \prod_{s\in R_{\lambda/\mu}}\frac{l_\mu(s) + 1 + \alpha a_{\mu}(s)}{l_\mu(s) + 1 + \alpha (a_{\mu}(s) + 1)}
+\prod_{s\in C_{\lambda/\mu}}\frac{l_\mu(s) + \alpha (a_{\mu}(s) + 1)}{l_\mu(s) + 1 + \alpha (a_{\mu}(s) + 1)}J_\lambda.
+\]
+This coincides with the expression of $\frak{a}_{-1}[I_\mu]$ by linear combination of $ [I_\lambda]$, which is $\mathbf{f}_{1,0} [I_\mu]$ in the notation of this section.
+Hence by LQW's results, we can get 
+\[\frac{1}{l!}\mathbf{f}_{0,l} = -\sum_{l(\lambda) = l+2, |\lambda| = 0} \frac{1}{\lambda!}\mathfrak{a}_\lambda,\]
+then by the relation between $\mathbf{F}(z)$ and $\mathbf{D}(z)$ we can express $\mathbf{D}(z)$ by $p_\lambda$ and its dual $p_\lambda^*$ explicitly.
+
+\section{Third point of view}
+\begin{theorem}
+Let $n>0$ and $k\geq1$. Let $t_1^{\delta(\cdot)}$ be the operator defined by putting $t_1^{\delta(\cdot)}\mathfrak{a}_\lambda = t_1^{l(\lambda^-)-l(\lambda^+)}\mathfrak{a}_\lambda$ for any generalized partition $\lambda$. Then, $\mathfrak{a}_{-n}^{(k)}$ is equal to
+
+\begin{gather*}
+(-t_2)^kt_1^{\delta(\cdot)-1}\Coeff_{s_1\cdots s_k z_1^{0}\cdots z_k^{0}}\frac{(Q_1^n-1)T_1^{-n}z_1^{-n}}{\prod_{i=1}^k(1-Q_1)(1-T_i^{-1})}\prod_{j=2}^k\lr{\prod_{i=1}^{j-1}f_{i,j} - \prod_{i=1}^{j-1}f_{j,i}}\\
+\cdot\prod_{i=1}^k\Gamma_-(T_iz_i)\Gamma_-(z_i)^{-1}\cdot\Gamma_+(Q_i^{-1}T_iz_i)\Gamma_+(T_iz_i)^{-1}.
+\end{gather*}
+
+where $Q_i = e^{\alpha s_i}$ with $\alpha = -t_1/t_2$, $T_i = e^{s_i}$, and
+\[
+f_{i,j} = \frac{1-(T_jz_j)^{-1}(T_iz_i)}{1-(Q_j^{-1}T_jz_j)^{-1}(T_iz_i)} \cdot \frac{1-(Q_j^{-1}T_jz_j)^{-1}z_i}{1-(T_jz_j)^{-1}z_i}.
+\]
+\end{theorem}
+\begin{prop}
+Let $n>0$ and $k\geq 1$. Then, $\frak{a}_{-n}^{(k)}$ is equal to
+\[
+n^kk!\cdot\sum_{l(\lambda)=k+1, |\lambda|=-n} (-1)^{l(\lambda^+)}(t_1t_2)^{l(\lambda^{-})-1}\frac{\frak{a}_\lambda}{\lambda^!} + \sum_{l(\lambda)<k+1,|\lambda|=-n} f_\lambda^{(k)}\frac{\frak{a}_\lambda}{\lambda^!}
+\]
+where $f_\lambda^{(k)}\in\mathbb{Q}(t_1,t_2)$ and $\lambda^{\pm}$ denote the positive and negative parts of $\lambda$.
+\end{prop}
+By expanding the expression in above theorem we see that $\frak{a}_{-n}^{(k)}$ is equal to
+\begin{gather*}
+(-1)^k t_2^k t_1^{\delta(\cdot)-1} \cdot \mathrm{Coeff}_{s_1 \cdots s_{k-1} z_1^{0} \cdots z^0_{k-1} } \frac{(-1)^k n z_1^{-n}}{\alpha^{k-1} s_1 \prod_{i=2}^k s_i^2} \\
+\cdot \left(1 + \frac{1}{2}(\alpha - 2) n s_1 - \frac{1}{2}(\alpha - 1) \sum_{i=1}^k s_i + O(2)\right) \\
+\cdot \alpha^{k-1} \prod_{j=2}^k \prod_{i=1}^{j-1} s_i s_j \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} + \frac{z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_i + \frac{(\alpha - 2) z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_j \right. \\
+\left. - \frac{z_{j,i}}{(1 - z_{j,i})^2} - \frac{z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_j - \frac{(\alpha - 2) z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_i + O(2) \right) \\
+\cdot \sum_\lambda \frac{\mathfrak{a}_\lambda}{\lambda!} \cdot \alpha^{\ell(\lambda)+} \cdot \left( \prod_{r>0} \left( \left( \sum_{i=1}^k s_i z_i^r \right)^{m_r} + \frac{r m_r}{2} \left( \sum_{i=1}^k s_i z_i^r \right)^{m_r - 1} \cdot \sum_{i=1}^k s_i^2 z_i^r \right. \right. \\
+\left. \left. + \prod_{r>0} \left( \left( \sum_{i=1}^k s_i z_i^{m_r} \right) + \frac{r m_r}{2} \left( \sum_{i=1}^k s_i z_i^{m_r} \right)^{m_r - 1} \sum_{i=1}^k (\alpha - 2) s_i^2 z_i^{m_r} \right) + O(\ell(\lambda) + 2) \right) \right)
+\end{gather*}
+By considering exponents of $z_1,\cdots,z_k$ and degree of $s_1,\cdots, s_k$, we see that only generalized partitions $\lambda$ with $\ell(\lambda)\leq k+1$ and $|\lambda|=-n$ contribute to $\frak{a}_{-n}^{(k)}$. Thus, $\frak{a}_{-n}^{(k)}$ is equal to
+\begin{gather*}
+\sum_{\substack{\ell(\lambda) \leq k+1, |\lambda| = -n}} \frac{\mathfrak{a}_\lambda}{\lambda!} \cdot (-1)^{\ell(\lambda^+)} t_1^{\ell(\lambda^-)-1} t_2^{k - \ell(\lambda^+)} \cdot \Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z_k^0} \frac{n z_1^{-n}}{\prod_{i=1}^k s_i} \\
+\cdot \left(1 + \frac{1}{2}(\alpha - 2)n s_1 - \frac{1}{2}(\alpha - 1)\sum_{i=1}^k s_i + O(2)\right)\\
+\cdot \prod_{j=2}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} + \frac{z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_i + \frac{(\alpha - 2)z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_j \right. \\
+\left. - \frac{z_{j,i}}{(1 - z_{j,i})^2} - \frac{z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_j - \frac{(\alpha - 2)z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_i + O(2) \right) \\
+\cdot \left(
+O(\ell(\lambda) + 2) + \prod_{r>0} \lr{
+\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}} + \frac{r m_{-r}}{2} \lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r} - 1} \cdot \sum_{i=1}^k s_i^2 z_i^r
+}
+\right.
+\\
+\left.
+\cdot \prod_{r>0}  \lr{
+\lr{\sum_{i=1}^k s_i z_i^{-r}}^{m_r}  + \frac{r m_r}{2} \lr{\sum_{i=1}^k s_i z_i^{-r} }^{m_r - 1}\cdot\sum_{i=1}^k (\alpha - 2) s_i^2 z_i^{-r}
+}
+\right).
+\end{gather*}
+It follows that
+\begin{gather*}
+\sum_{\substack{\ell(\lambda)=k+1, |\lambda|=-n}} (-1)^{\ell(\lambda^+)} (t_1 t_2)^{\ell(\lambda^-)-1} f_0^{(k)} \frac{\mathfrak{a}_\lambda}{\lambda^!}\\
+ + \sum_{\substack{\ell(\lambda)=k, |\lambda|=-n}} (-1)^{\ell(\lambda^+)} t_1^{\ell(\lambda^-)-1}t_2^{\ell(\lambda^-)}  f_{K, \lambda}^{(k)} \frac{\mathfrak{a}_\lambda}{\lambda^!}+\sum_{\substack{\ell(\lambda)<k, |\lambda|=-n}} f_\lambda^{(k)} \frac{\mathfrak{a}_\lambda}{\lambda^!}
+\end{gather*}
+where \( f_\lambda^{(k)} \in \mathbb{Q}(t_1, t_2) \), and \( f_0^{(k)} \in \mathbb{Q} \) with \( \ell(\lambda) = k + 1 \) and \( |\lambda| = -n \) is equal to
+\[
+\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z_k^0} \frac{n z_1^{-n}}{\prod_{i=1}^k s_i} \prod_{j=2}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right) \cdot \prod_{r \neq 0} \left( \sum_{i=1}^k s_i z_i^{m_r} \right) 
+\]
+and $f_{K,\lambda}^{(k)}$ is equal to
+\begin{gather*}
+\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}
+\cdot\lr{\frac12 (\alpha-2)ns_1 - \frac12(\alpha-1) \sum_{i=1}^ks_i }\\
+\cdot \prod_{j=2}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+ + 
+ \Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{j=2}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\\
+\cdot\sum_{r\neq0}(2-\alpha)^{\sigma(-r)}\lr{
+\lr{
+\prod_{s\neq0,r} \lr{\sum_{i=1}^k s_i z_i^{-s}}^{m_{s}}} \cdot
+\frac{(-r) m_{r}}{2} \lr{\sum_{i=1}^k s_i z_i^{-r} }^{m_r - 1}\cdot\sum_{i=1}^k s_i^2 z_i^{-r}
+}\\
++ \Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+\cdot\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1}s_i\lr{\frac{z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_i + \frac{(\alpha - 2)z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_j-\frac{z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_j - \frac{(\alpha - 2)z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_i}\right.\\
+\left.\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right)\\
+\end{gather*}
+where $k>2$, $\sigma(r) = 1$ if $r<0$ and $\sigma(r) = 0$ if $r>0$.
+We make the following guess:
+\begin{conj}
+When $\ell(\lambda) = k$ and $|\lambda| = -n$, there are:
+\begin{gather*}
+\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}s_{i_0}}{\prod_{i=1}^k s_i} \prod_{j=2}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\\\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}=(k-1)!n^k\\
+\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{j=2}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\\
+\cdot
+\lr{
+\prod_{s\neq0,r} \lr{\sum_{i=1}^k s_i z_i^s}^{m_{-s}}} \cdot
+\frac{r m_{-r}}{2} \lr{\sum_{i=1}^k s_i z_i^{r} }^{m_{-r} - 1}\cdot\sum_{i=1}^k s_i^2 z_i^{r} \\
+= \frac{(-1)^k}{2}(k-2)!nm_{-r}\lr{(r-n)^k + kn^{k-1}r -n^k}.
+\end{gather*}
+\end{conj}
+Besides, we make the following expansion:
+\begin{gather*}
+\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+\cdot\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1}s_i\lr{\frac{z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_i + \frac{(\alpha - 2)z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_j-\frac{z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_j - \frac{(\alpha - 2)z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_i}\right.\\
+\left.\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right)\\
+=\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}
+\cdot\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1}s_i\lr{\frac{z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_i + \frac{(2 - \alpha)z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_i}\right.\\
+\left.\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right)
+-\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+\cdot\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1}s_i\lr{ \frac{(2 - \alpha)z_{i,j}(1 + z_{i,j})}{2(1 - z_{i,j})^3} s_j + \frac{z_{j,i}(1 + z_{j,i})}{2(1 - z_{j,i})^3} s_j}\right.
+\left.\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right)\\
+=\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}
+\cdot\frac12\sum_{l\in\mathbb{Z}}(2-\alpha)^{\sigma(l)}l^2\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1} s_i^2 z_{i,\psi}^l\right.\\
+\left.\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right)
+-\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+\cdot\frac12\sum_{l\in\mathbb{Z}}(2-\alpha)^{1-\sigma(l)}l^2\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1}s_is_\psi z_{i,\psi}^l\right.
+\left.\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right)\\
+\end{gather*}
+Denote
+\[
+\begin{aligned}
+A &= \Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+&\cdot\frac12\sum_{l\in\mathbb{Z}}(2-\alpha)^{\sigma(l)}l^2\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1} s_i^2 z_{i,\psi}^l\right.\left.\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right),\\
+\\
+B &= \Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+&\cdot\frac12\sum_{l\in\mathbb{Z}}(2-\alpha)^{1-\sigma(l)}l^2\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1}s_is_\psi z_{i,\psi}^l\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right).\\
+\end{aligned}
+\]
+Then there is
+\[
+\begin{aligned}
+A&= \frac12n\sum_{l\in\mathbb{Z}}(2-\alpha)^{\sigma(l)}l^2\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} }\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+& \cdot\frac{z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1} s_i^2 z_{i,\psi}^l\right.\left.\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right)\\
+&= \frac12n\sum_{l\in\mathbb{Z}}(2-\alpha)^{\sigma(l)}l\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} }\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\cdot\frac{z_1^{-n}}{\prod_{i=1}^k s_i}\\&\cdot\sum_{\psi=2}^k\left(\lr{s_1\sum_{t_1\in
+\mathbb{Z}}t_2z_{12}^{t_1}}\cdot\sum_{i=1}^{2}\lr{s_i\sum_{t_2\in\mathbb{Z}}t_2z_{i3}^{t_2}}\cdots\sum_{i=1}^{\psi-1} ls_i^2 z_{i,\psi}^l\cdots\sum_{i=1}^{k-1}\lr{s_i\sum_{t_{k-1}\in\mathbb{Z}}t_{k-1}z_{ik}^{t_{k-1}}}\right)\\
+&= \frac12n\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} }\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\cdot\frac{z_1^{-n}}{\prod_{i=1}^k s_i}\\
+&\cdot\sum_{\psi=2}^k\left(\lr{s_1\sum_{t_1\in
+\mathbb{Z}}t_1z_{12}^{t_1}}\cdot\sum_{i=1}^{2}\lr{s_i\sum_{t_2\in\mathbb{Z}}t_2z_{i3}^{t_2}}\cdots\sum_{i=1}^{\psi-1} s_i^2 \sum_{l\in\mathbb{Z}}(2-\alpha)^{\sigma(l)}l^2z_{i,\psi}^l\cdots\sum_{i=1}^{k-1}\lr{s_i\sum_{t_{k-1}\in\mathbb{Z}}t_{k-1}z_{ik}^{t_{k-1}}}\right)\\
+&= \frac12n\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} }\lr{\sum_{i=1}^k s_i z_i^{-r_1}}\cdots\lr{\sum_{i=1}^k s_i z_i^{-r_k}}\\
+& \cdot\frac{z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\sum_{\psi=2}^k\left(\sum_w \sum_{t_1,\ldots ,t_{k-1}\in\mathbb{Z}} (2-\alpha)^{\sigma(t_{\psi-1})}t_{\psi-1} s_{w_1}t_1z_{w_1,2}^{t_1}\cdots s_{w_{\psi-1}}t_{\psi-1}z_{w_{\psi-1},\psi}^{t_{\psi-1}}\cdots s_{w_{k-1}}t_{k-1}z_{w_{k-1},k}^{t_{k-1}}\right)\\
+&= \frac12n\sum_{\psi=2}^k\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} }\sum_{u}s_{u_1}\ldots s_{u_k}z_{u_1}^{-r_1}\ldots z_{u_k}^{-r_k}\\
+& \cdot\frac{z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\left(\sum_w \sum_{t_1,\ldots ,t_{k-1}\in\mathbb{Z}}(2-\alpha)^{\sigma(t_{\psi-1})}t_1\ldots t_{\psi-1}^2\ldots t_{k-1} \cdot s_{w_1}\ldots s_{w_{\psi-1}}^2 \ldots s_{w_{k-1}} \cdot z_{w_1,2}^{t_1}\cdots z_{w_{k-1},k}^{t_{k-1}}\right)\\
+\end{aligned}
+\]
+, where $t_{\psi-1} = l, {w_1}=1, 1\leq w_i\leq i, 1\leq u_i\leq k$.
+\begin{example}
+Explicit formulas for different $k$:
+\begin{itemize}
+    \item $k=3$:
+    \[
+    \begin{aligned}
+    A = \frac{1}{2}n \Bigg(
+    & 2n^3 + \sum_{i=1}^{3} \rho^{\sigma(n+r_i)} (n+r_i)^3
+    \Bigg).
+    \end{aligned}
+    \]
+
+    \item $k=4$:
+    \[
+    \begin{aligned}
+    A = \frac{1}{2}n \Bigg(
+    & 6n^4 + 2\sum_{i<j<k} \rho^{\sigma(-r_i-r_j-r_k)} (r_i+r_j+r_k)^4 \\
+    & -4n\sum_{i<j} \rho^{\sigma(-r_i-r_j)} (r_i+r_j)^3  -2\sum_{i<j} \rho^{\sigma(-r_i-r_j)} (r_i+r_j)^4
+    \Bigg).\\
+    \end{aligned}
+    \]
+
+    \item $k=5$:
+    \[
+    \begin{aligned}
+    A = \frac{1}{2}n \Bigg(
+    & 24n^5 - 6\sum_{i<j<k<l} \rho^{\sigma(-r_i-r_j-r_k-r_l)} (r_i+r_j+r_k+r_l)^5 \\
+    & +10n\sum_{i<j<k} \rho^{\sigma(-r_i-r_j-r_k)} (r_i+r_j+r_k)^4  +6\sum_{i<j<k} \rho^{\sigma(-r_i-r_j-r_k)} (r_i+r_j+r_k)^5\\
+    & -20n^2 \sum_{i<j} \rho^{\sigma(-r_i-r_j)} (r_i+r_j)^3 - 20n\sum_{i<j} \rho^{\sigma(-r_i-r_j)} (r_i+r_j)^4 - 6\sum_{i<j} \rho^{\sigma(-r_i-r_j)} (r_i+r_j)^5
+    \Bigg).\\
+    \end{aligned}
+    \]
+\end{itemize}
+\end{example}
+Let $\gamma(\alpha, d)$ denote
+\[
+\gamma(\alpha, d) = \sum_{i_1<\cdots<i_\alpha} \rho^{\sigma(-r_{i_1} - \cdots -r_{i_\alpha})}(-r_{i_1}-\cdots-r_{i_\alpha})^d.
+\]
+Follow this notation, above results is
+\begin{itemize}
+    \item $k=3$:
+    \[
+    \begin{aligned}
+    A = \frac{1}{2}n \Bigg(
+    & 2n^3 + \gamma(2,3)
+    \Bigg).
+    \end{aligned}
+    \]
+
+    \item $k=4$:
+    \[
+    \begin{aligned}
+    A = \frac{1}{2}n \Bigg(6n^4 + 2\gamma(3,4)  + 4n\gamma(2,3)  -2\gamma(2,4)
+    \Bigg).\\
+    \end{aligned}
+    \]
+
+    \item $k=5$:
+    \[
+    \begin{aligned}
+    A = \frac{1}{2}n \Bigg(
+    & 24n^5 + 6\gamma(4,5) +10n\gamma(3,4)  - 6\gamma(3,5) +20n^2\gamma(2,3) - 20n\gamma(2,4) + 6\gamma(2,5)
+    \Bigg).\\
+    \end{aligned}
+    \]
+\end{itemize}
+
+Here $\psi$ denotes the subscript such that $\sum_{i=1}^{j-1} s_i\sum_{t\in\mathbb{Z}}tz_{ij}^t$ is substituted by $\sum_{i=1}^{j-1} s_i^2\sum_{t\in\mathbb{Z}}t^2z_{ij}^t$ or  $\sum_{i=1}^{j-1} s_is_j\sum_{t\in\mathbb{Z}}t^2z_{ij}^t$, the range of $\psi$ is $2$ to $k$. For each $\psi$, here we list the results without $\frac12 n$:
+
+\begin{itemize}
+    % 第一层：psi 用 圆点 •
+    \item $\psi = 2$:
+    \begin{itemize}[label=$\circ$]  % 第二层：圆圈 ◦，不像负号
+        \item $k=3$: $res = 2n^3.$
+        \item $k=4$: $res = 6n^4.$
+        \item $k=5$: $res = 24n^5.$
+        \item $k=6$: $res = 120n^6.$
+        \item $k=7$: $res = 720n^7.$
+    \end{itemize}
+
+    \item $\psi = 3$:
+    \begin{itemize}[label=$\circ$]
+    	\item $k=3$: $res = \gamma(2,3)$
+        \item $k=4$:
+        $
+        res = n\gamma(2,3) - \gamma(2,4) + 2\gamma(3,4).
+        $
+        
+        \item $k=5$:
+        \[
+        res = 2n^2\gamma(2,3) - 4n\gamma(2,4) + 2\gamma(2,5)+ 4n\gamma(3,4) -4\gamma(3,5) + 6\gamma(4,5)
+        \]
+        
+        \item $k=6$:
+        \[
+        \begin{aligned}
+        res = &6n^3\gamma(2,3) - 18n^2\gamma(2,4) + 18n\gamma(2,5) -6\gamma(2,6)\\
+        &+12n^2\gamma(3,4) - 24n\gamma(3,5) + 12\gamma(3,6)+ 18n\gamma(4,5) -18\gamma(4,6) + 24\gamma(5,6)
+        \end{aligned}
+        \]
+        
+        \item $k=7$:
+        \[
+        \begin{aligned}
+        res = &24n^4\gamma(2,3) - 96n^3\gamma(2,4) + 144n^2\gamma(2,5) - 96n\gamma(2,6) + 24\gamma(2,7)\\
+        &+ 48n^3\gamma(3,4) - 144n^2\gamma(3,5) + 144n\gamma(3,6) - 48\gamma(3,7)\\
+        &+ 72n^2\gamma(4,5) -144n\gamma(4,6) + 72\gamma(4,7)\\
+        & + 96n\gamma(5,6) -96\gamma(5,7)\\
+        & +120\gamma(6,7)
+        \end{aligned}
+        \]
+    \end{itemize}
+
+    \item $\psi = 4$:
+    \begin{itemize}[label=$\circ$]
+    	\item $k=4$:$res = 3n\gamma(2,3) - \gamma(2,4)$
+        \item $k=5$:
+        \[
+        res = 6n^2\gamma(2,3) -8n\gamma(2,4) + 2\gamma(2,5) + 6n\gamma(3,4) - 2\gamma(3,5)
+        \]
+        
+        \item $k=6$:
+        \[
+        \begin{aligned}
+        res = &18n^3\gamma(2,3) - 42n^2\gamma(2,4) + 30n\gamma(2,5) - 6\gamma(2,6)\\
+        & + 24n^2\gamma(3,4) - 32n\gamma(3,5) + 8\gamma(3,6)+ 18n\gamma(4,5) - 6\gamma(4,6)
+        \end{aligned}
+        \]
+        
+        \item $k=7$:
+        \[
+        \begin{aligned}
+        res = &72n^4\gamma(2,3) - 240n^3\gamma(2,4) + 288n^2\gamma(2,5) - 144n\gamma(2,6) + 24\gamma(2,7)\\
+        &+ 108n^3\gamma(3,4) - 252n^2\gamma(3,5) + 180n\gamma(3,6) - 36\gamma(3,7)\\
+        &+ 108n^2\gamma(4,5) -144n\gamma(4,6) + 36\gamma(4,7)\\
+        &+ 72n\gamma(5,6) -24\gamma(5,7)\\
+        \end{aligned}
+        \]
+        
+        \item $k=8$:
+        \[
+        \begin{aligned}
+        res = &360n^5\gamma(2,3) - 1560n^4\gamma(2,4) + 2640n^3\gamma(2,5) - 2160n^2\gamma(2,6) + 840n\gamma(2,7) - 120\gamma(2,8)\\
+        &+ 576n^4\gamma(3,4) - 1920n^3\gamma(3,5) + 2304n^2\gamma(3,6) - 1152n\gamma(3,7) + 192\gamma(3,8)\\
+        &+ 648n^3\gamma(4,5) - 1512n^2\gamma(4,6) + 1080n\gamma(4,7) - 216\gamma(4,8)\\
+        &+ 576n^2\gamma(5,6) - 768n\gamma(5,7) + 192\gamma(5,8)\\
+        &+ 360n\gamma(6,7) - 120\gamma(6,8)
+        \end{aligned}
+        \]
+    \end{itemize}
+    
+    \item $\psi = 5$:
+    \begin{itemize}[label=$\circ$]
+    	\item $k=5$:
+	\[
+	res = 12n^2\gamma(2,3) - 8n\gamma(2,4) + 2\gamma(2,5)
+	\]
+	
+	\item $k=6$:
+        \[
+        \begin{aligned}
+        res = &36n^3\gamma(2,3) - 60n^2\gamma(2,4) + 30n\gamma(2,5) - 6\gamma(2,6)\\
+        & + 24n^2\gamma(3,4) - 16n\gamma(3,5) + 4\gamma(3,6)
+        \end{aligned}
+        \]
+        
+        \item $k=7$:
+        \[
+        \begin{aligned}
+        res = &144n^4\gamma(2,3) - 384n^3\gamma(2,4) + 360n^2\gamma(2,5) - 144n\gamma(2,6) + 24\gamma(2,7)\\
+        &+ 144n^3\gamma(3,4) - 240n^2\gamma(3,5) + 120n\gamma(3,6) - 24\gamma(3,7)\\
+        &+ 72n^2\gamma(4,5) - 48n\gamma(4,6) + 12\gamma(4,7)\\
+        \end{aligned}
+        \]
+        
+        \item $k=8$:
+        \[
+        \begin{aligned}
+        res = &720n^5\gamma(2,3) - 2640n^4\gamma(2,4) + 3720n^3\gamma(2,5) - 2520n^2\gamma(2,6) + 840n\gamma(2,7) - 120\gamma(2,8)\\
+        &+ 864n^4\gamma(3,4) - 2304n^3\gamma(3,5) + 2160n^2\gamma(3,6) - 864n\gamma(3,7) + 144\gamma(3,8)\\
+        &+ 648n^3\gamma(4,5) -1080n^2\gamma(4,6) + 540n\gamma(4,7) - 108\gamma(4,8)\\
+        &+ 288n^2\gamma(5,6) - 192n\gamma(5,7) + 48\gamma(5,8)
+        \end{aligned}
+        \]
+    \end{itemize}
+    
+    \item $\psi = 6$:
+    \begin{itemize}[label=$\circ$]
+    	\item $k=6$:
+	\[
+	res = 60n^3\gamma(2,3) - 60n^2\gamma(2,4) + 30n\gamma(2,5) - 6\gamma(2,6)
+	\]
+	
+	 \item $k=7$:
+        \[
+        \begin{aligned}
+        res = &240n^4\gamma(2,3) - 480n^3\gamma(2,4) + 360n^2\gamma(2,5) - 144n\gamma(2,6) + 24\gamma(2,7)\\
+        &+ 120n^3\gamma(3,4) - 120n^2\gamma(3,5) + 60n\gamma(3,6) - 12\gamma(3,7)\\
+        \end{aligned}
+        \]
+    \end{itemize}
+        
+    \item $\psi = 7$:
+    \begin{itemize}[label=$\circ$]
+    	\item $k = 7$:
+	\[
+	res = 360n^4\gamma(2,3) - 480n^3\gamma(2,4) + 360n^2\gamma(2,5) - 144\gamma(2,6) + 24\gamma(2,7)
+	\]
+    \end{itemize}
+\end{itemize}
+Now we consider 
+\[
+\begin{aligned}
+B &= \Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} } \frac{n z_1^{-n}}{\prod_{i=1}^k s_i}\cdot\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\\
+&\cdot\frac12\sum_{l\in\mathbb{Z}}(2-\alpha)^{1-\sigma(l)}l^2\sum_{\psi=2}^k\left(\sum_{i=1}^{\psi-1}s_is_\psi z_{i,\psi}^l\cdot\prod_{j=2,j\neq\psi}^k \sum_{i=1}^{j-1} s_i \left( \frac{z_{i,j}}{(1 - z_{i,j})^2} - \frac{z_{j,i}}{(1 - z_{j,i})^2} \right)\right).\\
+&= \frac12n\Coeff_{s_1 \cdots s_{k} z_1^{0} \cdots z^0_{k} }\prod_{r\in\mathbb{Z}}\lr{\sum_{i=1}^k s_i z_i^r}^{m_{-r}}\cdot\frac{z_1^{-n}}{\prod_{i=1}^k s_i}\\
+&\cdot\sum_{\psi=2}^k\left(\lr{s_1\sum_{t_1\in
+\mathbb{Z}}t_1z_{12}^{t_1}}\cdot\sum_{i=1}^{2}\lr{s_i\sum_{t_2\in\mathbb{Z}}t_2z_{i3}^{t_2}}\cdots
+\sum_{i=1}^{\psi-1} s_is_\psi \sum_{l\in\mathbb{Z}}(2-\alpha)^{\sigma(-t_{\psi-1})}t_{\psi-1}^2z_{i,\psi}^{t_{\psi-1}}\right.\\
+&\left.\cdots\sum_{i=1}^{k-1}\lr{s_i\sum_{t_{k-1}\in\mathbb{Z}}t_{k-1}z_{ik}^{t_{k-1}}}\right)
+\end{aligned}
+\]
+Let $\eta(\alpha, d)$ denote
+\[
+\eta(\alpha, d) = \sum_{i_1<\cdots<i_\alpha} \rho^{\sigma(r_{i_1} + \cdots + r_{i_\alpha})}(-r_{i_1}-\cdots-r_{i_\alpha})^d.
+\]
+Here we summarize some results:
+\begin{itemize}
+    % 第一层：psi 用 圆点 •
+	\item $\psi = 2$:
+    	\begin{itemize}[label=$\circ$]  % 第二层：圆圈 ◦，不像负号
+    		\item $k = 3$: $res = n\eta(1,2) - \eta(1,3) + \eta(2,3)$
+		
+		\item $k = 4$: 
+		\[
+		res = 2n^2\eta(1,2) - 4n\eta(1,3) + 2\eta(1,4) + 2n\eta(2,3) - 2\eta(2,4) + 2\eta(3,4)
+		\]
+		
+		\item $k = 5$: 
+		\[
+		\begin{aligned}
+		res &= 6n^3\eta(1,2) - 18n^2\eta(1,3) + 18n\eta(1,4) - 6\eta(1,5)\\
+		& + 6n^2\eta(2,3) - 12n\eta(2,4) + 6\eta(2,5) + 6n\eta(3,4) - \eta(3,5) + 6\eta(4,5)
+		\end{aligned}
+		\]
+		
+		\item $k = 6$: 
+		\[
+		\begin{aligned}
+		res &= 24n^4\eta(1,2) - 96n^3\eta(1,3) + 144n^2\eta(1,4) - 96n\eta(1,5) + 24\eta(1,6)\\
+		& + 24n^3\eta(2,3) - 72n^2\eta(2,4) + 72n\eta(2,5) - 24n\eta(2,6)\\
+		& + 24n^2\eta(3,4) - 48n\eta(3,5) + 24\eta(3,6) + 24n\eta(4,5) - 24\eta(4,6) + 24\eta(5,6)
+		\end{aligned}
+		\]
+    	\end{itemize}
+    
+    	\item $\psi = 3$:
+    	\begin{itemize}[label=$\circ$]  % 第二层：圆圈 ◦，不像负号
+    		\item $k = 3$: $res = 2n\eta(1,2)$
+		\item $k = 4$: 
+		\[
+		res = 4n^2\eta(1,2) - 4n\eta(1,3) + 2n\eta(2,3)
+		\]
+		\item $k = 5$: 
+		\[
+		res = 12n^3\eta(1,2) - 24n^2\eta(1,3) + 12n\eta(1,4) + 8n^2\eta(2,3) - 8n\eta(2,4) + 4n\eta(3,4)
+		\]
+		\item $k = 6$: 
+		\[
+		\begin{aligned}
+		res &= 48n^4\eta(1,2) - 144n^3\eta(1,3) + 144n^2\eta(1,4) - 48n\eta(1,5)\\
+		& + 36n^3\eta(2,3) - 72n^2\eta(2,4) + 36n\eta(2,5) + 24n^2\eta(3,4) - 24n\eta(3,5) + 12n\eta(4,5)
+		\end{aligned}
+		\]
+	\end{itemize}
+	
+	\item $\psi = 4$:
+    	\begin{itemize}[label=$\circ$]  % 第二层：圆圈 ◦，不像负号
+		\item $k = 4$: 
+		\[
+		res = 6n^2\eta(1,2)
+		\]
+		
+		\item $k = 5$: 
+		\[
+		res = 18n^3\eta(1,2) - 18n^2\eta(1,3) + 6n^2\eta(2,3)
+		\]
+		
+		\item $k = 6$: 
+		\[
+		res = 72n^4\eta(1,2) - 144n^3\eta(1,3) + 72n^2\eta(1,4) + 36n^3\eta(2,3) - 36n^2\eta(2,4) + 12n^2\eta(3,4)
+		\]
+	\end{itemize}
+	
+	\item $\psi = 5$:
+    	\begin{itemize}[label=$\circ$]  % 第二层：圆圈 ◦，不像负号
+		\item $k = 5$: 
+		\[
+		res = 24n^3\eta(1,2)
+		\]
+		
+		\item $k = 6$: 
+		\[
+		res = 96n^4\eta(1,2) - 96n^3\eta(1,3) + 24n^3\eta(2,3)
+		\]
+	\end{itemize}
+	
+	\item $\psi = 6$:
+    	\begin{itemize}[label=$\circ$]  % 第二层：圆圈 ◦，不像负号
+		\item $k = 6$: 
+		\[
+		res = 120n^4\eta(1,2)
+		\]
+		
+	\end{itemize}
+\end{itemize}
+\begin{conj}
+For each $k,\psi\geq3$, let $\delta = k - \psi$, $S_{i_1,\ldots,i_d} = -r_{i_1}-\cdots-r_{i_d}$, there is 
+\[
+\begin{aligned}
+res_{B,k,\psi} &= \sum_{d=0}^{\delta} \binom{k-d-2}{\psi-2} (\psi-1)! \delta!\sum_{t=0}^{\delta-d} (-1)^t \binom{\delta-d}{t} n^{k-d-2-t} \eta(d+1, d+2+t)\\
+&= \sum_{d=0}^{k-\psi} \binom{k-d-2}{\psi-2} (\psi-1)! (k-\psi)! n^{\psi-2} \sum_{sys} (2-\alpha)^{\sigma(-S_{1,\ldots,d+1})}S_{1,\ldots,d+1}^{d+2}(n-S_{1,\ldots,d+1})^{k-\psi-d}\\
+B &= \frac12n\sum_{\psi=2}^k\sum_{d=0}^{k-\psi} \binom{k-d-2}{\psi-2} (\psi-1)! (k-\psi)! n^{\psi-2} \sum_{sys} (2-\alpha)^{\sigma(-S_{1,\ldots,d+1})}S_{1,\ldots,d+1}^{d+2}(n-S_{1,\ldots,d+1})^{k-\psi-d}\\
+res_{A,k,\psi} &= \sum_{d=1}^{\delta+1} \kappa_{\delta,\psi,d} \sum_{sys} (2-\alpha)^{\sigma(S_{d+1})} S_{d+1} ^d\left( (n - S_{d+1})^{\psi-1} - n^{\psi-1} + (\psi-1) n^{\psi-2} S_{d+1} \right) (n - S_{d+1})^{\delta+1-d},
+\end{aligned}
+\]
+where
+\[\kappa_{\delta,\psi,d} = \frac{(k-d-2)!}{(\delta-d+1)!}\delta!d\]
+\end{conj}
+To summary the results:
+\[
+\begin{aligned}
+A &= \frac12n\cdot(k-1)!n^k + \frac12n\sum_{\psi=3}^k\sum_{d=1}^{k-\psi+1}\binom{k-d-2}{\psi-3}(\psi-3)!(k-\psi)!d\cdot\\
+&\left(\sum_{sys}(2-\alpha)^{\sigma(S_{d+1})}S_{d+1}^d\left((n-S_{d+1})^{\psi-1}-n^{\psi-1}+(\psi-1)n^{\psi-2}S_{d+1}\right)(n-S_{d+1})^{k-d-\psi+1}\right)\\
+B &= \frac12n\sum_{\psi=2}^k\sum_{d=0}^{k-\psi} \binom{k-d-2}{\psi-2} (\psi-1)! (k-\psi)! n^{\psi-2} \sum_{sys} (2-\alpha)^{\sigma(-S_{d+1})}S_{d+1}^{d+2}(n-S_{d+1})^{k-\psi-d}\\
+C &= \left(\frac12(1-\alpha)k - \frac12(2-\alpha)n\right)(k-1)!n^k\\
+D &= \frac12(-1)^k(k-2)!n\sum_{sys}(2-\alpha)^{\sigma(S_1)}\left((-1)^k(n-S_1)^k - n^k + kn^{k-1}S_1\right)\\
+f_{K,\lambda}^{(k)} &= A - B + C + D
+\end{aligned}
+\]
+By further calculation, there are
+\[
+\begin{aligned}
+A &= \frac12(k-1)!n^{k+1} + \frac12n\sum_{d=1}^{k-2}(-1)^d(k-d-2)!d!\sum_{\mu=d+2}^k (-1)^\mu\binom{k}{\mu}\binom{\mu-2}{d}n^{k-\mu}\sum_{sys}(2-\alpha)^{\sigma(S_{d+1})}S_{d+1}^\mu\\
+B &= \frac12n\sum_{d=0}^{k-2}(-1)^d(k-d-2)!d!\sum_{\mu=d+2}^k (-1)^\mu\binom{k}{\mu}\binom{\mu-2}{d}n^{k-\mu}\sum_{sys}(2-\alpha)^{\sigma(-S_{d+1})}S_{d+1}^\mu.\\
+\end{aligned}
+\]
+Therefore, we deduce from these formulae that:
+\[
+\begin{aligned}
+f_{K,\lambda}^{(k)} &= \frac12n(1-\alpha)\left(k!n^{k-1}-(k-1)!n^k\right)\\
+&+\frac12n(1-\alpha)\left(\sum_{d=0}^{k-2}(-1)^d(k-d-2)!d!\sum_{\mu=d+2}^k(-1)^\mu\binom{k}{\mu}\binom{\mu-2}{d}n^{k-\mu}\sum_{sys}(-1)^{\sigma(-S_{d+1})}S_{d+1}^\mu\right)\\
+&= \frac12n(1-\alpha)\left(k!n^{k-1}-(k-1)!n^k\right)\\
+&+\frac12n(1-\alpha)\left(\sum_{d=0}^{k-2}(-1)^d(k-d-2)!d!\sum_{sys}n^{k-d-2}S_{d+1}^{d+2}{}_2F_1\left(d-3,-(k-d-2);d-1;\frac{S_{d+1}}{n}\right)\right)
+\end{aligned}
+\]
 \end{document}
